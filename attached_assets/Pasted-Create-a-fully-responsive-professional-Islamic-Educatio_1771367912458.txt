@@ -1,0 +1,316 @@
+Create a fully responsive, professional Islamic Education Web App frontend using modern HTML, CSS, and JavaScript (or React if preferred). This must be a FRONTEND-ONLY project with no backend integration.
+
+The app must look like a real production-level Android + Web application.
+
+🎨 DESIGN REQUIREMENTS
+
+Fully responsive (mobile-first design)
+
+Works perfectly on:
+
+Mobile devices
+
+Tablets
+
+Laptops/Desktop
+
+Modern UI (clean spacing, soft shadows, rounded cards, smooth hover effects)
+
+Sidebar navigation for desktop
+
+Bottom navigation bar for mobile
+
+Professional Islamic-themed color palette
+
+Smooth transitions and animations
+
+Use Google Fonts (professional typography)
+
+Place a LOGO at top left (use placeholder image that can be replaced later)
+
+Create a Language Toggle (English / Urdu)
+
+Create a Light Mode / Dark Mode toggle
+
+All text must support RTL when Urdu is selected
+
+🌍 LANGUAGE SYSTEM
+
+Create full bilingual UI system:
+
+English (LTR layout)
+
+Urdu (RTL layout)
+
+When Urdu is selected:
+
+Entire layout switches to RTL
+
+Font changes to Urdu-friendly font
+
+All headings and labels translated
+
+Use a simple translation JSON object inside frontend.
+
+📚 INCLUDE ALL THESE PANELS & FEATURES (UI ONLY)
+
+Design separate pages or sections for:
+
+1️⃣ Dashboard
+
+Welcome message
+
+Student name placeholder
+
+Quick stats cards:
+
+Attendance %
+
+Quiz Score
+
+Hifz Progress
+
+Salaah Streak
+
+Upcoming classes section
+
+Recent activity panel
+
+2️⃣ Darse Nizami Books
+
+Book grid layout
+
+Each book card:
+
+Title
+
+Class name
+
+View button
+
+Download button
+
+PDF viewer UI placeholder
+
+Category filter sidebar
+
+3️⃣ Quran & Tajweed Module
+
+Quran reading interface
+
+Arabic text display card
+
+Tajweed color-coded sample text
+
+Audio player UI
+
+Hifz progress tracker bar
+
+Repeat Ayah button
+
+Memorization checklist
+
+4️⃣ Library & Resources
+
+Islamic Stories section
+
+Daily Duas section
+
+Arabic–Urdu Dictionary search bar UI
+
+Resource cards with icons
+
+5️⃣ Video Lectures
+
+Video card grid
+
+Category filters
+
+Embedded video player placeholder
+
+360° video section UI
+
+6️⃣ Live Classes
+
+Live session card
+
+Join Now button
+
+Schedule list
+
+Countdown timer UI
+
+7️⃣ Recorded Classes
+
+Video history list
+
+Filter by subject
+
+Progress indicator on watched videos
+
+8️⃣ Quiz & Assessment System
+
+Quiz category cards
+
+MCQ interface UI
+
+Flashcard mode UI
+
+Weekly Test section
+
+Score result screen
+
+Progress bar
+
+Leaderboard preview
+
+9️⃣ AI Tutoring Panel
+
+Chat interface UI
+
+Arabic practice input field
+
+Instant feedback display card
+
+Suggestion buttons
+
+🔟 Attendance Tracking (Teacher Panel UI)
+
+Student list table
+
+Present / Absent toggle buttons
+
+Date selector
+
+Attendance summary graph placeholder
+
+1️⃣1️⃣ Progress Reports (Parent Panel)
+
+Student performance charts UI
+
+Hifz tracking graph placeholder
+
+Attendance chart placeholder
+
+Download report button
+
+1️⃣2️⃣ Fee & User Management (Admin UI)
+
+Student list table
+
+Fee status badges (Paid / Pending)
+
+Add Student form UI
+
+Search & filter system
+
+1️⃣3️⃣ Communication Portal
+
+Chat UI between Teacher & Parent
+
+Notification badge
+
+Message input field
+
+1️⃣4️⃣ Achievement System
+
+Badge grid
+
+Locked / Unlocked badges
+
+Points counter
+
+Reward animation placeholder
+
+1️⃣5️⃣ Streak System
+
+Daily login streak counter
+
+Weekly progress tracker
+
+Motivational message card
+
+1️⃣6️⃣ Leaderboard
+
+Ranked list UI
+
+Top 3 highlighted cards
+
+User rank indicator
+
+1️⃣7️⃣ Salaah Tracker
+
+5 daily prayer checklist
+
+Weekly summary card
+
+Completion percentage ring
+
+🎛 NAVIGATION STRUCTURE
+
+Create:
+
+Sidebar (Desktop)
+
+Collapsible menu
+
+Bottom navigation (Mobile)
+
+Smooth routing between pages (use SPA routing if React)
+
+🌙 DARK MODE
+
+Toggle button in header
+
+Persist selection using localStorage
+
+Proper dark background, cards, and text contrast
+
+🔐 AUTH SCREENS (UI ONLY)
+
+Login Page
+
+Signup Page
+
+Forgot Password Page
+
+Role selection (Student / Parent / Admin)
+
+📱 RESPONSIVENESS
+
+Mobile-first design
+
+Grid layout
+
+Use Flexbox or CSS Grid
+
+Ensure no overflow issues
+
+Smooth scaling UI
+
+🧱 STRUCTURE
+
+Organize code cleanly:
+
+Components folder
+
+Pages folder
+
+Styles folder
+
+Translation file
+
+Theme file
+
+🚫 IMPORTANT
+
+This is frontend-only.
+No backend integration.
+Use mock data for everything.
+All buttons should show UI feedback but not connect to real APIs.
+
+Create complete working UI with navigation between all panels.
+
+Make it look like a real published Islamic Education App.
+
+PROMPT END
