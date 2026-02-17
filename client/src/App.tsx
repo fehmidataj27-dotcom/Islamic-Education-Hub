@@ -11,6 +11,10 @@ import Landing from "@/pages/Landing";
 import Dashboard from "@/pages/Dashboard";
 import Books from "@/pages/Books";
 import Tutor from "@/pages/Tutor";
+import Quran from "@/pages/Quran";
+import Quizzes from "@/pages/Quizzes";
+import LiveClasses from "@/pages/LiveClasses";
+import Achievements from "@/pages/Achievements";
 import NotFound from "@/pages/not-found";
 
 // Placeholder components for routes not fully implemented in this generation step
@@ -29,12 +33,10 @@ function AuthenticatedApp() {
         <Route path="/" component={Dashboard} />
         <Route path="/books" component={Books} />
         <Route path="/tutor" component={Tutor} />
-        
-        {/* Placeholders for remaining routes */}
-        <Route path="/quran" component={() => <Placeholder title="Quran & Tajweed" />} />
-        <Route path="/live" component={() => <Placeholder title="Live Classes" />} />
-        <Route path="/quizzes" component={() => <Placeholder title="Quizzes & Exams" />} />
-        <Route path="/achievements" component={() => <Placeholder title="Achievements" />} />
+        <Route path="/quran" component={Quran} />
+        <Route path="/quizzes" component={Quizzes} />
+        <Route path="/live" component={LiveClasses} />
+        <Route path="/achievements" component={Achievements} />
         
         <Route component={NotFound} />
       </Switch>
