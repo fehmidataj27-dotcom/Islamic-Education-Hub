@@ -31,6 +31,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
+import logoImg from "@/assets/images/logo.jpg";
+
 export default function Layout({ children }: { children: ReactNode }) {
   const [location] = useLocation();
   const { user, logout } = useAuth();
@@ -50,12 +52,10 @@ export default function Layout({ children }: { children: ReactNode }) {
     <div className="flex flex-col h-full bg-card border-r border-border">
       <div className="p-6 border-b border-border/50">
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground font-bold text-xl shadow-lg shadow-primary/25">
-            M
-          </div>
+          <img src={logoImg} alt="Sout-ul-Quran" className="h-12 w-12 object-contain" />
           <div>
-            <h1 className="font-bold text-lg leading-none text-foreground tracking-tight">Madrasa</h1>
-            <p className="text-xs text-muted-foreground mt-1">Online Education</p>
+            <h1 className="font-bold text-lg leading-none text-foreground tracking-tight">Sout-ul-Quran</h1>
+            <p className="text-xs text-muted-foreground mt-1">Online Quran Academy</p>
           </div>
         </div>
       </div>

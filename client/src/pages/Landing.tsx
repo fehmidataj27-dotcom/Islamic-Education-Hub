@@ -4,6 +4,8 @@ import { useTheme } from "@/hooks/use-theme";
 import { ArrowRight, BookOpen, Users, Award, Check } from "lucide-react";
 import { motion } from "framer-motion";
 
+import logoImg from "@/assets/images/logo.jpg";
+
 export default function Landing() {
   const { theme } = useTheme();
 
@@ -13,8 +15,8 @@ export default function Landing() {
       <nav className="fixed w-full z-50 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold">M</div>
-            <span className="font-bold text-xl tracking-tight">Madrasa</span>
+            <img src={logoImg} alt="Sout-ul-Quran" className="h-10 w-10 object-contain" />
+            <span className="font-bold text-xl tracking-tight">Sout-ul-Quran</span>
           </div>
           <div className="flex items-center gap-4">
             <Link href="/api/login">
