@@ -1,0 +1,14 @@
+{
+  "id": "gen_x6fim4",
+  "email": "test_signup_1772586773030@example.com",
+  "firstName": "Test",
+  "lastName": "User",
+  "profileImageUrl": null,
+  "role": "student",
+  "username": "test_signup_1772586773030@example.com",
+  "studentId": "STU6916",
+  "password": "password123",
+  "phoneNumber": null,
+  "createdAt": "2026-03-04T01:12:54.364Z",
+  "updatedAt": "2026-03-04T01:12:54.364Z"
+}

@@ -6,12 +6,50 @@ import { randomUUID } from "crypto";
 import { tmpdir } from "os";
 import { join } from "path";
 
-export const openai = new OpenAI({
-  apiKey: process.env.AI_INTEGRATIONS_OPENAI_API_KEY,
-  baseURL: process.env.AI_INTEGRATIONS_OPENAI_BASE_URL,
+let _openai: OpenAI | null = null;
+function getOpenAI(): OpenAI {
+  if (!_openai) {
+    try {
+      const apiKey = process.env.AI_INTEGRATIONS_OPENAI_API_KEY || process.env.OPENAI_API_KEY;
+      if (!apiKey) {
+        throw new Error("Missing OpenAI API Key");
+      }
+      _openai = new OpenAI({
+        apiKey: apiKey,
+        baseURL: process.env.AI_INTEGRATIONS_OPENAI_BASE_URL,
+      });
+    } catch (error) {
+      console.warn("[OpenAI] Initialization failed, using mock client:", (error as Error).message);
+      // Return a proxy that just logs and does nothing rather than throwing at top level
+      _openai = new Proxy({} as any, {
+        get: (target, prop) => {
+          if (prop === "chat") return { completions: { create: async () => { throw new Error("AI features disabled: Missing API Key"); } } };
+          if (prop === "audio") return { transcriptions: { create: async () => { throw new Error("AI features disabled: Missing API Key"); } } };
+          if (prop === "images") return { generate: async () => { throw new Error("AI features disabled: Missing API Key"); } };
+          return () => { throw new Error(`AI features disabled: Missing API Key (tried to access ${String(prop)})`); };
+        }
+      });
+    }
+  }
+  return _openai!;
+}
+export const openai = new Proxy({} as OpenAI, {
+  get: (_target, prop) => (getOpenAI() as any)[prop],
 });
 
 export type AudioFormat = "wav" | "mp3" | "webm" | "mp4" | "ogg" | "unknown";
+
+async function isFfmpegAvailable(): Promise<boolean> {
+  try {
+    return new Promise((resolve) => {
+      const ffmpeg = spawn("ffmpeg", ["-version"]);
+      ffmpeg.on("error", () => resolve(false));
+      ffmpeg.on("close", (code) => resolve(code === 0));
+    });
+  } catch (err) {
+    return false;
+  }
+}
 
 /**
  * Detect audio format from buffer magic bytes.
@@ -72,7 +110,7 @@ export async function convertToWav(audioBuffer: Buffer): Promise<Buffer> {
         outputPath,
       ]);
 
-      ffmpeg.stderr.on("data", () => {}); // Suppress logs
+      ffmpeg.stderr.on("data", () => { }); // Suppress logs
       ffmpeg.on("close", (code) => {
         if (code === 0) resolve();
         else reject(new Error(`ffmpeg exited with code ${code}`));
@@ -82,10 +120,13 @@ export async function convertToWav(audioBuffer: Buffer): Promise<Buffer> {
 
     // Read converted audio
     return await readFile(outputPath);
+  } catch (error) {
+    console.error("[AudioClient] ffmpeg conversion failed:", error);
+    throw error;
   } finally {
     // Clean up temp files
-    await unlink(inputPath).catch(() => {});
-    await unlink(outputPath).catch(() => {});
+    await unlink(inputPath).catch(() => { });
+    await unlink(outputPath).catch(() => { });
   }
 }
 
@@ -96,13 +137,28 @@ export async function convertToWav(audioBuffer: Buffer): Promise<Buffer> {
  */
 export async function ensureCompatibleFormat(
   audioBuffer: Buffer
-): Promise<{ buffer: Buffer; format: "wav" | "mp3" }> {
+): Promise<{ buffer: Buffer; format: AudioFormat }> {
   const detected = detectAudioFormat(audioBuffer);
-  if (detected === "wav") return { buffer: audioBuffer, format: "wav" };
-  if (detected === "mp3") return { buffer: audioBuffer, format: "mp3" };
-  // Convert WebM, MP4, OGG, or unknown to WAV
-  const wavBuffer = await convertToWav(audioBuffer);
-  return { buffer: wavBuffer, format: "wav" };
+
+  // OpenAI supports several formats directly without conversion
+  const directSupport: AudioFormat[] = ["wav", "mp3", "webm", "mp4", "ogg"];
+  if (directSupport.includes(detected)) {
+    return { buffer: audioBuffer, format: detected };
+  }
+
+  // If format is unknown or not directly supported, try converting to WAV if ffmpeg is available
+  if (await isFfmpegAvailable()) {
+    try {
+      const wavBuffer = await convertToWav(audioBuffer);
+      return { buffer: wavBuffer, format: "wav" };
+    } catch (err) {
+      console.warn("[AudioClient] Conversion failed, trying pass-through as last resort");
+    }
+  } else {
+    console.warn("[AudioClient] ffmpeg not found, passing raw buffer to AI");
+  }
+
+  return { buffer: audioBuffer, format: detected === "unknown" ? "wav" : detected };
 }
 
 /**
@@ -239,9 +295,25 @@ export async function textToSpeechStream(
  */
 export async function speechToText(
   audioBuffer: Buffer,
-  format: "wav" | "mp3" | "webm" = "wav"
+  format: AudioFormat = "wav"
 ): Promise<string> {
-  const file = await toFile(audioBuffer, `audio.${format}`);
+  const apiKey = process.env.AI_INTEGRATIONS_OPENAI_API_KEY || process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    console.warn("[AudioClient] Missing API Key, returning mock transcription");
+    return "Assalam o Alikum! What is the proper way to perform Wudu? (Mock Transcription - Please add OpenAI API Key)";
+  }
+
+  // Map internal formats to OpenAI supported extensions
+  const extMap: Record<string, string> = {
+    wav: "wav",
+    mp3: "mp3",
+    webm: "webm",
+    mp4: "m4a",
+    ogg: "ogg",
+    unknown: "wav"
+  };
+  const extension = extMap[format] || "wav";
+  const file = await toFile(audioBuffer, `audio.${extension}`);
   const response = await openai.audio.transcriptions.create({
     file,
     model: "gpt-4o-mini-transcribe",

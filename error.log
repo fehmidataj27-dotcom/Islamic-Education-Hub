@@ -1,0 +1,36 @@
+client/src/pages/Achievements.tsx(94,14): error TS2304: Cannot find name 'Button'.
+client/src/pages/Achievements.tsx(96,15): error TS2304: Cannot find name 'Button'.
+client/src/pages/Dashboard.tsx(89,124): error TS2322: Type '{ value: number; className: string; indicatorClassName: string; }' is not assignable to type 'IntrinsicAttributes & Omit<ProgressProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLDivElement>'.
+  Property 'indicatorClassName' does not exist on type 'IntrinsicAttributes & Omit<ProgressProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLDivElement>'.
+client/src/pages/Dashboard.tsx(152,21): error TS2322: Type '"link"' is not assignable to type '"default" | "destructive" | "outline" | "secondary" | "ghost" | null | undefined'.
+client/src/pages/Quizzes.tsx(75,18): error TS2304: Cannot find name 'Badge'.
+client/src/pages/Quizzes.tsx(75,33): error TS2304: Cannot find name 'Badge'.
+server/replit_integrations/audio/routes.ts(23,27): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+server/replit_integrations/audio/routes.ts(51,27): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+server/replit_integrations/audio/routes.ts(65,39): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+server/replit_integrations/batch/utils.ts(110,30): error TS2339: Property 'AbortError' does not exist on type '<T>(input: (attemptNumber: number) => T | PromiseLike<T>, options?: Options | undefined) => Promise<T>'.
+server/replit_integrations/batch/utils.ts(159,32): error TS2339: Property 'AbortError' does not exist on type '<T>(input: (attemptNumber: number) => T | PromiseLike<T>, options?: Options | undefined) => Promise<T>'.
+server/replit_integrations/chat/routes.ts(25,27): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+server/replit_integrations/chat/routes.ts(53,27): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+server/replit_integrations/chat/routes.ts(65,39): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+server/replit_integrations/chat/storage.ts(16,14): error TS2451: Cannot redeclare block-scoped variable 'chatStorage'.
+server/replit_integrations/chat/storage.ts(53,14): error TS7006: Parameter 'a' implicitly has an 'any' type.
+server/replit_integrations/chat/storage.ts(53,17): error TS7006: Parameter 'b' implicitly has an 'any' type.
+server/replit_integrations/chat/storage.ts(134,14): error TS2451: Cannot redeclare block-scoped variable 'chatStorage'.
+server/replit_integrations/image/client.ts(23,18): error TS18048: 'response.data' is possibly 'undefined'.
+server/replit_integrations/image/client.ts(50,23): error TS18048: 'response.data' is possibly 'undefined'.
+server/replit_integrations/image/routes.ts(20,25): error TS18048: 'response.data' is possibly 'undefined'.
+server/storage.ts(5,69): error TS2305: Module '"@shared/schema"' has no exported member 'InsertResource'.
+server/storage.ts(6,20): error TS2305: Module '"@shared/schema"' has no exported member 'InsertVideo'.
+server/storage.ts(6,54): error TS2305: Module '"@shared/schema"' has no exported member 'InsertLiveClass'.
+server/storage.ts(7,19): error TS2305: Module '"@shared/schema"' has no exported member 'InsertQuiz'.
+server/storage.ts(7,55): error TS2724: '"@shared/schema"' has no exported member named 'InsertQuizQuestion'. Did you mean 'QuizQuestion'?
+server/storage.ts(8,25): error TS2305: Module '"@shared/schema"' has no exported member 'InsertQuizResult'.
+server/storage.ts(8,66): error TS2724: '"@shared/schema"' has no exported member named 'InsertAchievement'. Did you mean 'UserAchievement'?
+server/storage.ts(9,30): error TS2724: '"@shared/schema"' has no exported member named 'InsertUserAchievement'. Did you mean 'UserAchievement'?

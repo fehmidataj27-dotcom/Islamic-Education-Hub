@@ -1,0 +1,50 @@
+﻿node.exe : C:\Users\Fehmida T
+aj\OneDrive\Desktop\Islamic-E
+ducation-Hub\node_modules\ope
+nai\src\client.ts:386
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~
+    + CategoryInfo           
+   : NotSpecified: (C:\User  
+  s\Fehmid...c\client.ts:3   
+ 86:String) [], RemoteExc    
+eption
+    + FullyQualifiedErrorId  
+   : NativeCommandError
+ 
+      throw new 
+Errors.OpenAIError(
+            ^
+
+OpenAIError: Missing 
+credentials. Please pass an 
+`apiKey`, or set the 
+`OPENAI_API_KEY` environment 
+variable.
+    at new OpenAI 
+(C:\Users\Fehmida Taj\OneDriv
+e\Desktop\Islamic-Education-H
+ub\node_modules\openai\src\cl
+ient.ts:386:13)
+    at <anonymous> 
+(C:\Users\Fehmida Taj\OneDriv
+e\Desktop\Islamic-Education-H
+ub\server\replit_integrations
+\audio\client.ts:9:23)
+    at ModuleJob.run (node:in
+ternal/modules/esm/module_job
+:413:25)
+    at async onImport.tracePr
+omise.__proto__ (node:interna
+l/modules/esm/loader:660:26)
+    at async asyncRunEntryPoi
+ntWithESMLoader (node:interna
+l/modules/run_main:101:5)
+
+Node.js v24.13.0

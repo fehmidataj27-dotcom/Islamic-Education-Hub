@@ -1,0 +1,67 @@
+﻿node.exe : DATABASE_URL is 
+not set. Database 
+functionality will not work.
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~
+    + CategoryInfo          : 
+    NotSpecified: (DATABASE_  
+  URL is... will not work.:   
+ String) [], RemoteExcepti    
+on
+    + FullyQualifiedErrorId : 
+    NativeCommandError
+ 
+[MemStorage] Data loaded from storage_dump.json
+[DEBUG] SERVER RESTARTED AT 2026-03-05T09:03:42.020Z
+[AUTH] Initializing setupAuth...
+[AUTH] Registering 'local' strategy...
+Replit Auth credentials 
+missing. OIDC Auth will be 
+unavailable. Local Auth is 
+active.
+[DEBUG] Routes registration starting...
+[DEBUG] Auth routes registered.
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+[MemStorage] Data saved to storage_dump.json
+2:03:44 PM [express] serving on port 5000

@@ -1,0 +1,27 @@
+{
+  "conversations": [
+    {
+      "id": 1,
+      "title": "Teachers Main Group"
+    },
+    {
+      "id": 2,
+      "title": "Islamic AI Assistant ✨"
+    },
+    {
+      "id": 3,
+      "title": "Islamic AI Tutor ✨"
+    },
+    {
+      "id": 4,
+      "title": "Admin Office"
+    },
+    {
+      "id": 5,
+      "title": "Saut-ul-Quran Main Group"
+    }
+  ],
+  "messagesCount": {
+    "count": "4"
+  }
+}

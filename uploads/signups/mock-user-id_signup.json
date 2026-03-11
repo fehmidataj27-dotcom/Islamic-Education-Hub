@@ -1,0 +1,14 @@
+{
+  "id": "mock-user-id",
+  "email": "mock@example.com",
+  "firstName": "Mock",
+  "lastName": "User",
+  "profileImageUrl": null,
+  "role": "admin",
+  "username": "mockuser",
+  "studentId": "MOCK001",
+  "password": "123",
+  "phoneNumber": null,
+  "createdAt": "2026-03-04T12:16:07.095Z",
+  "updatedAt": "2026-03-04T12:16:07.095Z"
+}

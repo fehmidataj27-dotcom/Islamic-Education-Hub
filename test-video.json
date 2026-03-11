@@ -1,0 +1,11 @@
+{
+    "title": {
+        "en": "Test Video",
+        "ur": "ٹیسٹ ویڈیو"
+    },
+    "category": "Fiqh",
+    "url": "/uploads/test.mp4",
+    "thumbnail": "https://images.unsplash.com/photo-1564121211835-e88c852648ab?w=800&auto=format&fit=crop&q=60",
+    "duration": "10:00",
+    "viewCount": 0
+}

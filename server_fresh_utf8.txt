@@ -1,0 +1,125 @@
+﻿﻿[DEBUG] SERVER RESTARTED AT 2026-03-08T23:05:30.855Z
+[AUTH] Initializing setupAuth...
+[AUTH] Registering 'local' strategy...
+node.exe : Replit Auth 
+credentials missing. OIDC 
+Auth will be unavailable. 
+Local Auth is active.
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~
+    + CategoryInfo          : 
+    NotSpecified: (Replit Au  
+  th cre...Auth is active.:   
+ String) [], RemoteExcepti    
+on
+    + FullyQualifiedErrorId : 
+    NativeCommandError
+ 
+CRITICAL ERROR during 
+registerRoutes: error: 
+duplicate key value violates 
+unique constraint 
+"users_email_unique"
+    at C:\Users\Fehmida Taj\On
+eDrive\Desktop\Islamic-Educati
+on-Hub\node_modules\pg-pool\in
+dex.js:45:11
+    at process.processTicksAnd
+Rejections (node:internal/proc
+ess/task_queues:103:5)
+    at async <anonymous> 
+(C:\Users\Fehmida Taj\OneDrive
+\Desktop\Islamic-Education-Hub
+\node_modules\src\node-postgre
+s\session.ts:104:19)
+    at async DatabaseAuthStora
+ge.upsertUser 
+(C:\Users\Fehmida Taj\OneDrive
+\Desktop\Islamic-Education-Hub
+\server\replit_integrations\au
+th\storage.ts:148:25)
+    at async seedDemoUsers 
+(C:\Users\Fehmida Taj\OneDrive
+\Desktop\Islamic-Education-Hub
+\server\routes.ts:89:11)
+    at async registerRoutes 
+(C:\Users\Fehmida Taj\OneDrive
+\Desktop\Islamic-Education-Hub
+\server\routes.ts:93:5)
+    at async <anonymous> 
+(C:\Users\Fehmida Taj\OneDrive
+\Desktop\Islamic-Education-Hub
+\server\index.ts:58:5) {
+  length: 223,
+  severity: 'ERROR',
+  code: '23505',
+  detail: 'Key (email)=(fehmid
+atajhujra@gmail.com) already 
+exists.',
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: 'public',
+  table: 'users',
+  column: undefined,
+  dataType: undefined,
+  constraint: 
+'users_email_unique',
+  file: 'nbtinsert.c',
+  line: '666',
+  routine: '_bt_check_unique'
+}
+[CRITICAL] Server startup 
+failed:
+  Message: duplicate key 
+value violates unique 
+constraint 
+"users_email_unique"
+  Code: 23505
+  Detail: Key (email)=(fehmida
+tajhujra@gmail.com) already 
+exists.
+  Where: undefined
+  Stack: error: duplicate key 
+value violates unique 
+constraint 
+"users_email_unique"
+    at C:\Users\Fehmida Taj\On
+eDrive\Desktop\Islamic-Educati
+on-Hub\node_modules\pg-pool\in
+dex.js:45:11
+    at process.processTicksAnd
+Rejections (node:internal/proc
+ess/task_queues:103:5)
+    at async <anonymous> 
+(C:\Users\Fehmida Taj\OneDrive
+\Desktop\Islamic-Education-Hub
+\node_modules\src\node-postgre
+s\session.ts:104:19)
+    at async DatabaseAuthStora
+ge.upsertUser 
+(C:\Users\Fehmida Taj\OneDrive
+\Desktop\Islamic-Education-Hub
+\server\replit_integrations\au
+th\storage.ts:148:25)
+    at async seedDemoUsers 
+(C:\Users\Fehmida Taj\OneDrive
+\Desktop\Islamic-Education-Hub
+\server\routes.ts:89:11)
+    at async registerRoutes 
+(C:\Users\Fehmida Taj\OneDrive
+\Desktop\Islamic-Education-Hub
+\server\routes.ts:93:5)
+    at async <anonymous> 
+(C:\Users\Fehmida Taj\OneDrive
+\Desktop\Islamic-Education-Hub
+\server\index.ts:58:5)
+

@@ -1,0 +1,116 @@
+[
+  {
+    "id": "mock-user-id",
+    "email": "admin@test.com",
+    "firstName": "Admin",
+    "lastName": "User",
+    "role": "admin",
+    "createdAt": "2026-02-26T05:43:14.753Z",
+    "updatedAt": "2026-02-28T19:51:03.355Z"
+  },
+  {
+    "id": "gen_z6b76v",
+    "email": "fehmidatajhujra@gmail.com",
+    "firstName": "Fehmida",
+    "lastName": "Taj",
+    "role": "student",
+    "createdAt": "2026-02-26T14:21:18.881Z",
+    "updatedAt": "2026-02-26T14:21:18.881Z"
+  },
+  {
+    "email": "admin@test.com",
+    "username": "admin",
+    "studentId": "ADM001",
+    "firstName": "Admin",
+    "lastName": "User",
+    "role": "admin",
+    "password": "123",
+    "id": "demo-admin",
+    "createdAt": "2026-02-28T19:51:03.359Z",
+    "updatedAt": "2026-02-28T19:51:03.359Z"
+  },
+  {
+    "email": "parent@test.com",
+    "username": "parent",
+    "studentId": "PAR001",
+    "firstName": "Parent",
+    "lastName": "Bano",
+    "role": "parent",
+    "password": "123",
+    "id": "demo-parent",
+    "createdAt": "2026-02-28T19:51:03.365Z",
+    "updatedAt": "2026-02-28T19:51:03.365Z"
+  },
+  {
+    "username": "stu123",
+    "studentId": "stu123",
+    "password": "123",
+    "firstName": "Tujza",
+    "lastName": "Ahmad",
+    "email": "",
+    "role": "student",
+    "id": "gen_6de9l",
+    "createdAt": "2026-03-01T00:39:35.200Z",
+    "updatedAt": "2026-03-01T00:39:35.200Z"
+  },
+  {
+    "id": "gen_4wr2sa",
+    "email": "",
+    "firstName": "Maria",
+    "lastName": "Suleman",
+    "role": "teacher",
+    "username": "Baji_Maria",
+    "studentId": "TCH002",
+    "password": "123",
+    "createdAt": "2026-03-01T04:22:10.348Z",
+    "updatedAt": "2026-03-01T04:22:10.348Z"
+  },
+  {
+    "email": "wajiha@test.com",
+    "username": "ustazah_wajiha",
+    "studentId": "TCH003",
+    "firstName": "Api Jan Hafiza",
+    "lastName": "Wajiha",
+    "role": "teacher",
+    "password": "123",
+    "id": "demo-ustazah-wajiha",
+    "createdAt": "2026-03-02T11:35:55.844Z",
+    "updatedAt": "2026-03-02T11:35:55.844Z"
+  },
+  {
+    "email": "teacher@test.com",
+    "username": "teacher",
+    "studentId": "TCH001",
+    "firstName": "Teacher",
+    "lastName": "Ali",
+    "role": "teacher",
+    "password": "123",
+    "id": "demo-teacher",
+    "createdAt": "2026-03-03T09:20:08.680Z",
+    "updatedAt": "2026-03-03T09:20:08.680Z"
+  },
+  {
+    "id": "gen_1izrm",
+    "email": "",
+    "firstName": "Hafiza",
+    "lastName": "Wajiha",
+    "role": "admin",
+    "username": "Hafiza_Wajiha",
+    "studentId": "TEC123",
+    "password": "123",
+    "createdAt": "2026-03-03T13:44:55.698Z",
+    "updatedAt": "2026-03-03T13:44:55.698Z"
+  },
+  {
+    "email": "student@test.com",
+    "username": "student",
+    "studentId": "STU001",
+    "firstName": "Student",
+    "lastName": "Khan",
+    "role": "student",
+    "password": "123",
+    "id": "demo-student",
+    "createdAt": "2026-03-03T13:44:59.382Z",
+    "updatedAt": "2026-03-03T13:44:59.382Z"
+  }
+]
