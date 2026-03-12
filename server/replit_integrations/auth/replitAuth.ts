@@ -186,8 +186,8 @@ export async function setupAuth(app: Express) {
 }
 
 export const isAuthenticated: RequestHandler = async (req, res, next) => {
-  // If in mock mode (no REPL_ID), bypass auth or inject mock user
-  if (!process.env.REPL_ID && !process.env.ISSUER_URL) {
+  // If in local mock mode (no REPL_ID and not in production), bypass auth or inject mock user
+  if (!process.env.REPL_ID && !process.env.ISSUER_URL && process.env.NODE_ENV !== 'production') {
     // Mock user if missing
     if (!req.user) {
       req.user = {
@@ -210,6 +210,11 @@ export const isAuthenticated: RequestHandler = async (req, res, next) => {
   }
 
   const user = req.user as any;
+  if (!user || !user.expires_at) {
+    if (process.env.NODE_ENV === 'production') {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+  }
 
   if (!req.isAuthenticated() || !user.expires_at) {
     return res.status(401).json({ message: "Unauthorized" });
