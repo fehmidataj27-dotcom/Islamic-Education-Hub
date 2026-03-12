@@ -1,0 +1,23 @@
+{
+    "name": "Saut-ul-Quran",
+    "short_name": "Saut-ul-Quran",
+    "description": "Online Quran Academy & Islamic Education Hub",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#064e3b",
+    "icons": [
+        {
+            "src": "/madressa_logo_trans.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/madressa_logo_trans.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
