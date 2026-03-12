@@ -1,0 +1,23 @@
+{
+    "name": "Hafiza Wajiha",
+    "short_name": "Hafiza Wajiha",
+    "description": "Online Quran Academy & Islamic Education Hub",
+    "start_url": "/?source=pwa",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#064e3b",
+    "icons": [
+        {
+            "src": "/hafiza_wajiha_icon.jpg?v=4",
+            "sizes": "192x192",
+            "type": "image/jpeg",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/hafiza_wajiha_icon.jpg?v=4",
+            "sizes": "512x512",
+            "type": "image/jpeg",
+            "purpose": "any maskable"
+        }
+    ]
+}

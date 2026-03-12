@@ -1,9 +1,9 @@
-const CACHE_NAME = 'saut-ul-quran-v2';
+const CACHE_NAME = 'saut-ul-quran-v3';
 const urlsToCache = [
     '/',
     '/index.html',
-    '/manifest.json',
-    '/hafiza_wajiha_icon.jpg'
+    '/site.webmanifest?v=4',
+    '/hafiza_wajiha_icon.jpg?v=4'
 ];
 
 self.addEventListener('install', event => {
