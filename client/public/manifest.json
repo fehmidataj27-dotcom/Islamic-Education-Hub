@@ -8,15 +8,15 @@
     "theme_color": "#064e3b",
     "icons": [
         {
-            "src": "/madressa_logo_trans.png",
+            "src": "/hafiza_wajiha_icon.jpg",
             "sizes": "192x192",
-            "type": "image/png",
+            "type": "image/jpeg",
             "purpose": "any maskable"
         },
         {
-            "src": "/madressa_logo_trans.png",
+            "src": "/hafiza_wajiha_icon.jpg",
             "sizes": "512x512",
-            "type": "image/png",
+            "type": "image/jpeg",
             "purpose": "any maskable"
         }
     ]
