@@ -1,6 +1,79 @@
-node_modules
-dist
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build output
+dist/
+build/
+server/public/
+
+# Environment variables (NEVER commit these)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Uploads folder (large media files — stored in Cloudinary on production)
+uploads/
+
+# Log files
+*.log
+log.txt
+server.log
+server_*.log
+startup*.log
+startup*.txt
+err_*.log
+out.log
+out_*.log
+
+# Temporary debug/test output files
+git_output*.txt
+tsc_output*.txt
+tsc_errors*.txt
+tsc_fresh*.txt
+tsc_dash*.txt
+tsc_plain.txt
+tsc_verify.txt
+tsc_fresh.txt
+fetch.txt
+fetch2.txt
+errors.txt
+full_tsc_errors.txt
+biggest_objects.txt
+index_output.html
+startup_log.txt
+startup_output.log
+startup_output.txt
+startup_test*.log
+server_debug.log
+server_fresh*.log
+server_full_test.log
+server_output*.log
+server_start.log
+server_startup.log
+server_test_start.log
+storage_dump.json
+users_dump.json
+tajweed_sample.json
+test-video.json
+test_upload.txt
+test_db_root.ts
+test_passport_local.js
+
+# Temp and debug
+tmp/
+.local/
+
+# OS files
 .DS_Store
-server/public
-vite.config.ts.*
+Thumbs.db
+
+# Archives
 *.tar.gz
+*.zip
+
+# Misc
+vite.config.ts.*
