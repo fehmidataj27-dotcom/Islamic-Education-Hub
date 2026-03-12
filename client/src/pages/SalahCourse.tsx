@@ -32,7 +32,7 @@ import CourseGroupsSection from "@/components/CourseGroupsSection";
 import LectureCover from "@/components/LectureCover";
 import CourseHero from "@/components/CourseHero";
 import CourseGuard from "@/components/CourseGuard";
-import namazHero from "file:///C:/Users/Fehmida%20Taj/.gemini/antigravity/brain/4ba9dfa2-40dd-4da3-86ca-15ecb75f168c/salah_course_banner_1772547230333.png";
+import namazHero from "@/assets/images/namaz_hero.png";
 import {
     AlertDialog,
     AlertDialogAction,

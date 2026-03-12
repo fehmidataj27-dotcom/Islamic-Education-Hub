@@ -31,7 +31,7 @@ import CourseGuard from "@/components/CourseGuard";
 import CourseGroupsSection from "@/components/CourseGroupsSection";
 import { TajweedText } from "@/components/TajweedText";
 import { TAJWEED_RULES } from "@/data/tajweed-data";
-import tajweedHero from "file:///C:/Users/Fehmida%20Taj/.gemini/antigravity/brain/4ba9dfa2-40dd-4da3-86ca-15ecb75f168c/tajweed_course_banner_1772547286521.png";
+import tajweedHero from "@/assets/images/tajweed_hero.png";
 import {
     AlertDialog,
     AlertDialogAction,

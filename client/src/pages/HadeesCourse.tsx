@@ -32,7 +32,7 @@ import CourseGroupsSection from "@/components/CourseGroupsSection";
 import LectureCover from "@/components/LectureCover";
 import CourseHero from "@/components/CourseHero";
 import CourseGuard from "@/components/CourseGuard";
-import hadeesHero from "file:///C:/Users/Fehmida%20Taj/.gemini/antigravity/brain/4ba9dfa2-40dd-4da3-86ca-15ecb75f168c/hadees_course_banner_1772547499657.png";
+import hadeesHero from "@/assets/images/hadees_hero.png";
 import {
     AlertDialog,
     AlertDialogAction,
