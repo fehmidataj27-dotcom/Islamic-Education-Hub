@@ -137,7 +137,8 @@ export default function Communication() {
     }, []);
 
     useEffect(() => {
-        if (conversations && conversations.length > 0 && selectedId === null) {
+        const isMobile = window.innerWidth < 768;
+        if (!isMobile && conversations && conversations.length > 0 && selectedId === null) {
             setSelectedId(conversations[0].id);
         }
     }, [conversations, selectedId]);
@@ -317,9 +318,9 @@ export default function Communication() {
     const messages = activeConv?.messages || [];
 
     return (
-        <div className="h-[calc(100vh-2rem)] w-full rounded-[2rem] border-none bg-white dark:bg-zinc-950 shadow-2xl overflow-hidden flex flex-col md:flex-row -mt-6">
+        <div className="h-[calc(100dvh-120px)] md:h-[calc(100vh-2rem)] w-full rounded-[1.5rem] md:rounded-[2rem] border-none bg-white dark:bg-zinc-950 shadow-2xl overflow-hidden flex flex-col md:flex-row md:-mt-6">
             {/* Sidebar / Contact List */}
-            <div className="w-full md:w-[400px] lg:w-[450px] border-r border-zinc-100 dark:border-zinc-800 flex flex-col bg-[#f0f2f5] dark:bg-zinc-900/50 shrink-0">
+            <div className={`w-full md:w-[400px] lg:w-[450px] border-r border-zinc-100 dark:border-zinc-800 flex-col bg-[#f0f2f5] dark:bg-zinc-900/50 shrink-0 ${selectedId ? 'hidden md:flex' : 'flex'}`}>
                 <div className="p-4 bg-[#f0f2f5] dark:bg-zinc-900 space-y-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
@@ -499,12 +500,20 @@ export default function Communication() {
             </div>
 
             {/* Chat Area */}
-            <div className={`flex-1 flex flex-col ${!selectedId ? 'hidden md:flex' : 'flex'} bg-white dark:bg-zinc-950`}>
+            <div className={`flex-1 flex-col ${!selectedId ? 'hidden md:flex' : 'flex'} bg-white dark:bg-zinc-950 h-full`}>
                 {selectedId ? (
                     <>
                         <div className="h-20 p-4 border-b border-zinc-100 dark:border-zinc-800 flex justify-between items-center bg-[#f0f2f5]/80 dark:bg-zinc-900/80 backdrop-blur-md z-10 shrink-0">
                             <div className="flex items-center gap-4">
-                                <Avatar className="h-14 w-14 border-2 border-emerald-500/30 shadow-xl cursor-pointer transition-transform hover:scale-105 active:scale-95">
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="md:hidden rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-800"
+                                    onClick={() => setSelectedId(null)}
+                                >
+                                    <X className="h-6 w-6" />
+                                </Button>
+                                <Avatar className="h-12 w-12 md:h-14 md:w-14 border-2 border-emerald-500/30 shadow-xl cursor-pointer transition-transform hover:scale-105 active:scale-95">
                                     <AvatarFallback className="bg-gradient-to-br from-emerald-600 to-emerald-800 text-white font-black">{activeConv?.title?.[0] || '?'}</AvatarFallback>
                                 </Avatar>
                                 <div>
