@@ -500,47 +500,62 @@ export default function Communication() {
             </div>
 
             {/* Chat Area */}
-            <div className={`flex-1 flex-col ${!selectedId ? 'hidden md:flex' : 'flex'} bg-white dark:bg-zinc-950 h-full`}>
+            <div className={`flex-1 flex-col ${!selectedId ? 'hidden md:flex' : 'flex'} bg-zinc-50 dark:bg-zinc-950 h-full relative`}>
+                {/* Abstract Premium Background */}
+                <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/islamic-art.png')] bg-repeat" />
+                <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/5 to-transparent pointer-events-none" />
                 {selectedId ? (
                     <>
-                        <div className="h-20 p-4 border-b border-zinc-100 dark:border-zinc-800 flex justify-between items-center bg-[#f0f2f5]/80 dark:bg-zinc-900/80 backdrop-blur-md z-10 shrink-0">
-                            <div className="flex items-center gap-4">
+                        <div className="h-24 p-6 border-b border-white/20 dark:border-zinc-800 flex justify-between items-center bg-white/40 dark:bg-zinc-900/40 backdrop-blur-2xl z-20 shrink-0 shadow-sm">
+                            <div className="flex items-center gap-5">
                                 <Button
                                     variant="ghost"
                                     size="icon"
-                                    className="md:hidden rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-800"
+                                    className="md:hidden rounded-full hover:bg-white/50 dark:hover:bg-zinc-800 transition-colors"
                                     onClick={() => setSelectedId(null)}
                                 >
-                                    <X className="h-6 w-6" />
+                                    <X className="h-6 w-6 text-emerald-800 dark:text-emerald-100" />
                                 </Button>
-                                <Avatar className="h-12 w-12 md:h-14 md:w-14 border-2 border-emerald-500/30 shadow-xl cursor-pointer transition-transform hover:scale-105 active:scale-95">
-                                    <AvatarFallback className="bg-gradient-to-br from-emerald-600 to-emerald-800 text-white font-black">{activeConv?.title?.[0] || '?'}</AvatarFallback>
-                                </Avatar>
+                                <div className="relative">
+                                    <Avatar className="h-14 w-14 md:h-16 md:w-16 border-4 border-white dark:border-zinc-800 shadow-2xl cursor-pointer transition-all hover:scale-110 active:scale-95 ring-2 ring-emerald-500/20">
+                                        <AvatarFallback className="bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-900 text-white font-black text-xl shadow-inner">{activeConv?.title?.[0] || '?'}</AvatarFallback>
+                                    </Avatar>
+                                    <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 border-4 border-white dark:border-zinc-900 rounded-full shadow-lg shadow-emerald-500/40 animate-pulse" />
+                                </div>
                                 <div>
-                                    <div className="flex items-center gap-2">
-                                        <h3 className="font-black text-xl text-zinc-900 dark:text-zinc-100 leading-tight tracking-tight">{activeConv?.title}</h3>
-                                        {activeConv?.title?.includes("Wajiha") && <Badge className="bg-emerald-600 text-white text-[9px] font-black uppercase px-2 py-0.5 animate-pulse border-none">Main Teacher</Badge>}
+                                    <div className="flex items-center gap-2.5">
+                                        <h3 className="font-black text-2xl text-emerald-950 dark:text-emerald-50 leading-none tracking-tight drop-shadow-sm">{activeConv?.title}</h3>
+                                        {activeConv?.title?.includes("Wajiha") && (
+                                            <Badge className="bg-gradient-to-r from-amber-400 to-amber-600 text-white text-[9px] font-black uppercase px-2.5 py-1 shadow-lg shadow-amber-500/20 border-none">
+                                                Main Teacher
+                                            </Badge>
+                                        )}
                                     </div>
-                                    <p className="text-[11px] font-black text-emerald-600 flex items-center gap-1.5 uppercase tracking-widest mt-0.5">
-                                        <span className={`w-2 h-2 rounded-full ${typingStatus === 'Typing...' ? 'bg-emerald-400 animate-bounce' : 'bg-emerald-500 animate-pulse'} shadow-[0_0_12px_rgba(16,185,129,0.8)]`}></span>
-                                        <span className="opacity-80 transition-all duration-300">
+                                    <div className="mt-1.5 flex items-center gap-2">
+                                        <div className="flex gap-0.5 items-end h-2.5 mb-0.5">
+                                            {[1, 2, 3].map(i => (
+                                                <div key={i} className={`w-0.5 bg-emerald-500 rounded-full animate-bounce`} style={{ animationDelay: `${i * 0.1}s`, height: `${40 + (i * 20)}%` }} />
+                                            ))}
+                                        </div>
+                                        <p className="text-[10px] font-black text-emerald-600 uppercase tracking-[0.2em]">
                                             {typingStatus === 'Typing...' ? (
-                                                <span className="text-emerald-500 lowercase italic tracking-normal font-bold">typing...</span>
+                                                <span className="text-emerald-500 animate-pulse italic">typing message...</span>
                                             ) : (
                                                 'Online & Secured'
                                             )}
-                                        </span>
-                                    </p>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-4">
-                                <Button variant="ghost" size="icon" className="h-12 w-12 rounded-full text-zinc-600 hover:bg-white hover:text-emerald-600 hover:shadow-lg dark:hover:bg-zinc-800 transition-all duration-300" onClick={() => startCall('audio')}><Phone className="h-6 w-6 stroke-[2.5]" /></Button>
-                                <Button variant="ghost" size="icon" className="h-12 w-12 rounded-full text-zinc-600 hover:bg-white hover:text-emerald-600 hover:shadow-lg dark:hover:bg-zinc-800 transition-all duration-300" onClick={() => startCall('video')}><Video className="h-6 w-6 stroke-[2.5]" /></Button>
-                                <div className="h-8 w-[1.5px] bg-zinc-200 dark:bg-zinc-800 mx-1 opacity-50" />
+                            <div className="flex items-center gap-2 md:gap-4">
+                                <div className="hidden sm:flex items-center gap-1 bg-white/50 dark:bg-black/20 p-1.5 rounded-full border border-white/20">
+                                    <Button variant="ghost" size="icon" className="h-10 w-10 rounded-full text-emerald-700 hover:bg-emerald-500 hover:text-white dark:text-emerald-400 transition-all duration-300" onClick={() => startCall('audio')}><Phone className="h-5 w-5 stroke-[2.5]" /></Button>
+                                    <Button variant="ghost" size="icon" className="h-10 w-10 rounded-full text-emerald-700 hover:bg-emerald-500 hover:text-white dark:text-emerald-400 transition-all duration-300" onClick={() => startCall('video')}><Video className="h-5 w-5 stroke-[2.5]" /></Button>
+                                </div>
                                 <Button
                                     variant="ghost"
                                     size="icon"
-                                    className={`h-12 w-12 rounded-full transition-all ${isInfoOpen ? 'bg-emerald-600 text-white shadow-xl' : 'text-zinc-600 hover:bg-zinc-200 dark:hover:bg-zinc-800'}`}
+                                    className={`h-12 w-12 rounded-full transition-all ${isInfoOpen ? 'bg-emerald-600 text-white shadow-xl' : 'text-zinc-500 hover:bg-white dark:hover:bg-zinc-800 shadow-sm border border-transparent hover:border-emerald-100'}`}
                                     onClick={() => setIsInfoOpen(!isInfoOpen)}
                                 >
                                     <MoreVertical className="h-6 w-6 stroke-[2.5]" />
@@ -549,10 +564,9 @@ export default function Communication() {
                         </div>
 
                         <ScrollArea
-                            className="flex-1 p-6 lg:p-10"
+                            className="flex-1 p-6 lg:p-10 relative z-10"
                             style={{
-                                background: `linear-gradient(135deg, #e5ddd5 0%, #d4c8bb 100%)`,
-                                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+                                background: `radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4) 0%, rgba(220, 210, 200, 0.4) 100%)`,
                             }}
                         >
                             <div className="space-y-6 max-w-5xl mx-auto">
@@ -622,7 +636,7 @@ export default function Communication() {
 
                                                     {/* WhatsApp bubble tail */}
                                                     <div className={`absolute top-0 w-4 h-4 overflow-hidden ${isMe ? '-right-2' : '-left-2'}`}>
-                                                        <div className={`w-4 h-4 rotate-45 ${isMe ? 'bg-[#dcf8c6] dark:bg-emerald-900/40 -translate-x-2' : 'bg-white dark:bg-zinc-800 translate-x-0'}`} />
+                                                        <div className={`w-4 h-4 rotate-45 shadow-sm ${isMe ? 'bg-[#dcf8c6] dark:bg-emerald-800 -translate-x-2' : 'bg-white dark:bg-zinc-800 translate-x-0'}`} />
                                                     </div>
 
                                                     {msg.fileType === 'voice' ? (
@@ -663,7 +677,7 @@ export default function Communication() {
                             </div>
                         </ScrollArea>
 
-                        <div className="bg-[#f0f2f5] dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-800 shrink-0 relative">
+                        <div className="bg-white/40 dark:bg-zinc-900/40 backdrop-blur-2xl border-t border-white/20 dark:border-zinc-800 shrink-0 relative z-20">
                             {/* Reply Preview Area */}
                             {replyingTo && (
                                 <div className="p-3 bg-zinc-100 dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700 animate-in slide-in-from-bottom-2 duration-200">
