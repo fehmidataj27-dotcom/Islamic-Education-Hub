@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/hooks/use-auth";
 import { useTheme } from "@/hooks/use-theme";
@@ -32,6 +32,7 @@ import {
   Sheet,
   SheetContent,
   SheetTrigger,
+  SheetClose,
 } from "@/components/ui/sheet";
 import {
   DropdownMenu,
@@ -44,9 +45,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import logoImg from "@/assets/images/logo.jpg";
 
 export default function Layout({ children }: { children: ReactNode }) {
-  const [location] = useLocation();
+  const [location, setLocation] = useLocation();
   const { user, logout } = useAuth();
   const { theme, setTheme, lang, setLang } = useTheme();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navigation = [
     { name: lang === 'en' ? 'Dashboard' : 'ڈیش بورڈ', href: '/dashboard', icon: LayoutDashboard },
@@ -77,36 +79,25 @@ export default function Layout({ children }: { children: ReactNode }) {
     return user && item.roles.includes(user.role.toLowerCase());
   });
 
-  const SidebarContent = () => (
+  const renderSidebar = (isMobile: boolean = false) => (
     <div className="flex flex-col h-full bg-card border-r border-border">
       {/* ── Branded Header ── */}
-      <div className="relative overflow-hidden border-b border-border/50">
-        <div className="bg-gradient-to-br from-emerald-800 via-green-800 to-teal-900 px-4 py-4">
-          {/* Decorative orbs */}
-          <div className="absolute -top-8 -right-8 h-28 w-28 rounded-full bg-white/5" />
-          <div className="absolute -bottom-6 -left-6 h-20 w-20 rounded-full bg-white/5" />
-
-          <div className="relative z-10 flex items-center gap-3">
-            {/* Logo image — no padding, fills the card fully */}
-            <div className="w-20 h-14 rounded-xl bg-white shadow-md shadow-black/40 overflow-hidden shrink-0 ring-1 ring-white/40">
-              <img
-                src={logoImg}
-                alt="Saut-ul-Quran"
-                className="w-full h-full object-cover object-center"
-              />
-            </div>
-
-            {/* Text */}
-            <div>
-              <h1 className="font-bold text-base text-white leading-tight tracking-wide">
-                Saut-ul-Quran
-              </h1>
-              <p className="text-[11px] text-emerald-100 mt-0.5 font-medium tracking-wider uppercase">
-                Online Quran Academy
-              </p>
-            </div>
+      <div className="p-6 border-b border-border/50">
+        <Link href="/dashboard" className="flex items-center gap-3 cursor-pointer">
+          <img
+            src={logoImg}
+            alt="Saut-ul-Quran"
+            className="h-10 w-10 sm:h-12 sm:w-12 object-contain rounded-full border border-primary/20 shadow-sm"
+          />
+          <div className="flex-1 min-w-0">
+            <h1 className="font-bold text-lg md:text-xl text-foreground truncate brand-text-premium">
+              Saut-ul-Quran
+            </h1>
+            <p className="text-xs text-muted-foreground truncate font-medium">
+              Islamic Education Hub
+            </p>
           </div>
-        </div>
+        </Link>
       </div>
 
 
@@ -114,20 +105,29 @@ export default function Layout({ children }: { children: ReactNode }) {
         {filteredNavigation.map((item) => {
           const isActive = location === item.href;
           return (
-            <Link key={item.name} href={item.href}>
-              <div
-                className={`
-                  flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 cursor-pointer
-                  ${isActive
-                    ? 'bg-primary text-primary-foreground shadow-md shadow-primary/20 font-medium'
-                    : 'text-muted-foreground hover:bg-muted hover:text-foreground'
-                  }
-                `}
-              >
-                <item.icon className={`h-5 w-5 ${isActive ? 'text-primary-foreground' : 'text-muted-foreground'}`} />
-                <span>{item.name}</span>
-              </div>
-            </Link>
+            <div
+              key={item.name}
+              onClick={() => {
+                if (isMobile) {
+                  setIsMobileMenuOpen(false); // Trigger Radix hide immediately
+                  setTimeout(() => {
+                    setLocation(item.href); // Navigate after animation begins
+                  }, 250);
+                } else {
+                  setLocation(item.href);
+                }
+              }}
+              className={`
+                flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 cursor-pointer
+                ${isActive
+                  ? 'bg-primary text-primary-foreground shadow-md shadow-primary/20 font-medium'
+                  : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                }
+              `}
+            >
+              <item.icon className={`h-5 w-5 ${isActive ? 'text-primary-foreground' : 'text-muted-foreground'}`} />
+              <span>{item.name}</span>
+            </div>
           );
         })}
       </nav>
@@ -137,7 +137,10 @@ export default function Layout({ children }: { children: ReactNode }) {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            onClick={() => {
+              if (isMobile) setIsMobileMenuOpen(false);
+              setTheme(theme === 'dark' ? 'light' : 'dark');
+            }}
             className="rounded-full hover:bg-muted"
           >
             {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
@@ -146,7 +149,10 @@ export default function Layout({ children }: { children: ReactNode }) {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => setLang(lang === 'en' ? 'ur' : 'en')}
+            onClick={() => {
+              if (isMobile) setIsMobileMenuOpen(false);
+              setLang(lang === 'en' ? 'ur' : 'en');
+            }}
             className="rounded-full hover:bg-muted font-bold"
           >
             {lang === 'en' ? 'اردو' : 'EN'}
@@ -169,7 +175,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuItem onClick={() => logout()} className="text-destructive focus:text-destructive cursor-pointer">
+            <DropdownMenuItem onClick={() => { if (isMobile) setIsMobileMenuOpen(false); logout(); }} className="text-destructive focus:text-destructive cursor-pointer">
               <LogOut className="mr-2 h-4 w-4" />
               <span>Log out</span>
             </DropdownMenuItem>
@@ -183,19 +189,19 @@ export default function Layout({ children }: { children: ReactNode }) {
     <div className="min-h-screen bg-background flex">
       {/* Desktop Sidebar */}
       <div className="hidden md:block w-64 fixed inset-y-0 z-50">
-        <SidebarContent />
+        {renderSidebar(false)}
       </div>
 
       {/* Mobile Sidebar */}
       <div className="md:hidden fixed top-4 left-4 z-50">
-        <Sheet>
+        <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
           <SheetTrigger asChild>
             <Button size="icon" variant="outline" className="shadow-lg bg-card border-primary/20">
               <Menu className="h-5 w-5" />
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="p-0 w-72 border-r border-border">
-            <SidebarContent />
+            {renderSidebar(true)}
           </SheetContent>
         </Sheet>
       </div>

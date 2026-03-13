@@ -186,38 +186,15 @@ export async function setupAuth(app: Express) {
 }
 
 export const isAuthenticated: RequestHandler = async (req, res, next) => {
-  // If in local mock mode (no REPL_ID and not in production), bypass auth or inject mock user
-  if (!process.env.REPL_ID && !process.env.ISSUER_URL && process.env.NODE_ENV !== 'production') {
-    // Mock user if missing
-    if (!req.user) {
-      req.user = {
-        claims: {
-          sub: "mock-user-id",
-          email: "fehmidatajhujra@gmail.com",
-          first_name: "Super",
-          last_name: "Admin",
-          role: "admin",
-          profile_image_url: "https://via.placeholder.com/150",
-          exp: Math.floor(Date.now() / 1000) + 3600
-        },
-        role: "admin",
-        access_token: "mock-token",
-        refresh_token: "mock-refresh",
-        expires_at: Math.floor(Date.now() / 1000) + 3600
-      };
-    }
-    return next();
-  }
-
   const user = req.user as any;
-  if (!user || !user.expires_at) {
-    if (process.env.NODE_ENV === 'production') {
-      return res.status(401).json({ message: "Unauthorized" });
-    }
+
+  if (!user || !req.isAuthenticated()) {
+    return res.status(401).json({ message: "Unauthorized" });
   }
 
-  if (!req.isAuthenticated() || !user.expires_at) {
-    return res.status(401).json({ message: "Unauthorized" });
+  // Local login does not strictly require OIDC style token refreshes
+  if (!user.expires_at) {
+    return next();
   }
 
   const now = Math.floor(Date.now() / 1000);
@@ -227,8 +204,7 @@ export const isAuthenticated: RequestHandler = async (req, res, next) => {
 
   const refreshToken = user.refresh_token;
   if (!refreshToken) {
-    res.status(401).json({ message: "Unauthorized" });
-    return;
+    return res.status(401).json({ message: "Unauthorized" });
   }
 
   try {
@@ -237,8 +213,7 @@ export const isAuthenticated: RequestHandler = async (req, res, next) => {
     updateUserSession(user, tokenResponse);
     return next();
   } catch (error) {
-    res.status(401).json({ message: "Unauthorized" });
-    return;
+    return res.status(401).json({ message: "Unauthorized" });
   }
 };
 
