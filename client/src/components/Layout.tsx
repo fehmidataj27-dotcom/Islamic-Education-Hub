@@ -52,16 +52,16 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   const navigation = [
     { name: lang === 'en' ? 'Dashboard' : 'ڈیش بورڈ', href: '/dashboard', icon: LayoutDashboard },
+    { name: lang === 'en' ? 'Darse Nizami' : 'درس نظامی', href: '/books', icon: Book },
+    { name: lang === 'en' ? 'Basics Library' : 'لائبریری', href: '/library', icon: Library },
+    { name: lang === 'en' ? 'Quran & Tajweed' : 'قرآن و تجوید', href: '/quran', icon: BookOpen },
     { name: lang === 'en' ? 'Communication' : 'رابطہ', href: '/communication', icon: MessagesSquare },
     { name: lang === 'en' ? 'User Management' : 'صارفین کا انتظام', href: '/user-management', icon: Users, roles: ['admin'] },
     { name: lang === 'en' ? 'Attendance' : 'حاضری', href: '/attendance', icon: ClipboardList, roles: ['teacher', 'admin', 'student'] },
-    { name: lang === 'en' ? 'Darse Nizami' : 'درس نظامی', href: '/books', icon: Book },
-    { name: lang === 'en' ? 'Quran & Tajweed' : 'قرآن و تجوید', href: '/quran', icon: BookOpen },
     { name: lang === 'en' ? 'Live Classes' : 'لائیو کلاسز', href: '/live', icon: Video },
     { name: lang === 'en' ? 'AI Tutor' : 'اے آئی ٹیوٹر', href: '/tutor', icon: MessagesSquare },
     { name: lang === 'en' ? 'Quizzes' : 'کوئز', href: '/quizzes', icon: GraduationCap },
     { name: lang === 'en' ? 'Achievements' : 'کامیابیاں', href: '/achievements', icon: Trophy },
-    { name: lang === 'en' ? 'Library' : 'لائبریری', href: '/library', icon: Library },
     { name: lang === 'en' ? 'Recorded Classes' : 'ریکارڈ شدہ کلاسیں', href: '/recorded-classes', icon: Video },
     { name: lang === 'en' ? 'Flashcards' : 'فلیش کارڈز', href: '/flashcards', icon: Layers },
     { name: lang === 'en' ? 'Salaah Tracker' : 'نماز ٹریکر', href: '/salaah-tracker', icon: Activity },
@@ -82,22 +82,33 @@ export default function Layout({ children }: { children: ReactNode }) {
   const renderSidebar = (isMobile: boolean = false) => (
     <div className="flex flex-col h-full bg-card border-r border-border">
       {/* ── Branded Header ── */}
-      <div className="p-6 border-b border-border/50">
-        <Link href="/dashboard" className="flex items-center gap-3 cursor-pointer">
-          <img
-            src={logoImg}
-            alt="Saut-ul-Quran"
-            className="h-10 w-10 sm:h-12 sm:w-12 object-contain rounded-full border border-primary/20 shadow-sm"
-          />
-          <div className="flex-1 min-w-0">
-            <h1 className="font-bold text-lg md:text-xl text-foreground truncate brand-text-premium">
-              Saut-ul-Quran
-            </h1>
-            <p className="text-xs text-muted-foreground truncate font-medium">
-              Islamic Education Hub
-            </p>
+      <div className="relative overflow-hidden border-b border-border/50">
+        <div className="bg-gradient-to-br from-emerald-800 via-green-800 to-teal-900 px-4 py-4">
+          {/* Decorative orbs */}
+          <div className="absolute -top-8 -right-8 h-28 w-28 rounded-full bg-white/5" />
+          <div className="absolute -bottom-6 -left-6 h-20 w-20 rounded-full bg-white/5" />
+
+          <div className="relative z-10 flex items-center gap-3">
+            {/* Logo image — no padding, fills the card fully */}
+            <div className="w-20 h-14 rounded-xl bg-white shadow-md shadow-black/40 overflow-hidden shrink-0 ring-1 ring-white/40">
+              <img
+                src={logoImg}
+                alt="Saut-ul-Quran"
+                className="w-full h-full object-cover object-center"
+              />
+            </div>
+
+            {/* Text */}
+            <div>
+              <h1 className="font-bold text-base text-white leading-tight tracking-wide">
+                Saut-ul-Quran
+              </h1>
+              <p className="text-[10px] text-white/80 font-medium uppercase tracking-widest mt-1">
+                Online Quran Academy
+              </p>
+            </div>
           </div>
-        </Link>
+        </div>
       </div>
 
 

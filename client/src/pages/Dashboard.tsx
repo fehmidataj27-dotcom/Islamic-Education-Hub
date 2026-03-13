@@ -1,4 +1,4 @@
-﻿import { useAuth } from "@/hooks/use-auth";
+import { useAuth } from "@/hooks/use-auth";
 import { useTheme } from "@/hooks/use-theme";
 import {
   useDailyStats,
@@ -76,8 +76,8 @@ export default function Dashboard() {
   };
 
   const t = {
-    welcome: lang === 'en' ? `${getGreeting()}, ${user?.firstName}` : `${getGreeting()}ØŒ ${user?.firstName}`,
-    subtitle: lang === 'en' ? "Welcome to the Academic Management Portal. Your journey to excellence continues." : "Ø§Ú©ÛŒÚˆÙ…Ú© Ù…ÛŒÙ†Ø¬Ù…Ù†Ù¹ Ù¾ÙˆØ±Ù¹Ù„ Ù…ÛŒÚº Ø®ÙˆØ´ Ø¢Ù…Ø¯ÛŒØ¯Û” Ø¢Ù¾ Ú©Ø§ Ø³ÙØ± Ø¬Ø§Ø±ÛŒ ÛÛ’Û”",
+    welcome: lang === 'en' ? `Welcome back, ${user?.role === 'admin' ? 'Admin' : user?.firstName}!` : `${getGreeting()}، ${user?.firstName}`,
+    subtitle: lang === 'en' ? "Let's continue your learning journey." : "اکیمیڈمک مینجمنٹ پورٹل میں خوش آمدید۔ آپ کا سفر جاری ہے۔",
     attendance: lang === 'en' ? 'Daily Attendance' : 'ÛŒÙˆÙ…ÛŒÛ Ø­Ø§Ø¶Ø±ÛŒ',
     markPresent: lang === 'en' ? 'Check In' : 'Ø­Ø§Ø¶Ø±ÛŒ Ù„Ú¯Ø§Ø¦ÛŒÚº',
     present: lang === 'en' ? 'Validated' : 'Ø­Ø§Ø¶Ø±',
@@ -139,8 +139,8 @@ export default function Dashboard() {
                     <span className="text-emerald-300/60 font-medium uppercase tracking-[0.4em] text-[8px] block">The Path of Sacred Knowledge</span>
                   </div>
                 </div>
-                <h1 className="text-5xl md:text-6xl lg:text-[4.5rem] font-bold tracking-tight text-emerald-100/90 leading-[1]">
-                  {getGreeting()}, <span className="brand-text-premium">{user?.firstName}</span>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
+                  {t.welcome}
                 </h1>
                 <p className="text-emerald-100/60 text-lg font-medium leading-relaxed max-w-xl">{t.subtitle}</p>
               </motion.div>
