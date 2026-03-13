@@ -520,51 +520,98 @@ export default function Library() {
 
     // Helper to play audio from a given src
     const startAudio = useCallback((word: string, audioUrl?: string) => {
-        const onEnded = () => { setPlayingWord(null); setPausedWord(null); };
-        const onError = () => { setPlayingWord(null); setPausedWord(null); };
+        const onEnded = () => {
+            setPlayingWord(null);
+            setPausedWord(null);
+        };
+
+        const onError = (error: any) => {
+            console.error("Audio playback error:", error);
+            setPlayingWord(null);
+            setPausedWord(null);
+
+            // Detailed feedback for mobile users
+            toast({
+                title: lang === 'en' ? "Playback Error" : "آڈیو چلانے میں خرابی",
+                description: lang === 'en' 
+                    ? "Your browser blocked audio or the file is unsupported. Try clicking again." 
+                    : "آپ کے براؤزر نے آڈیو بلاک کر دی ہے یا فائل اس ڈیوائس پر نہیں چل سکتی۔",
+                variant: "destructive"
+            });
+        };
 
         if (audioUrl) {
-            const audio = new Audio(audioUrl);
-            audioRef.current = audio;
-            audio.onended = onEnded;
-            audio.onerror = onError;
-            audio.play().catch(onError);
-            return audio;
+            try {
+                // Stop any existing audio
+                if (audioRef.current) {
+                    audioRef.current.pause();
+                    audioRef.current.src = "";
+                }
+
+                const finalUrl = audioUrl.startsWith('/') ? audioUrl : `/${audioUrl}`;
+                const audio = new Audio(finalUrl);
+                audioRef.current = audio;
+                
+                audio.preload = "auto";
+                audio.onended = onEnded;
+                audio.onerror = onError;
+
+                // Explicit load for mobile browsers
+                audio.load();
+
+                const playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch((err) => {
+                        console.warn("Audio play promise failed:", err);
+                        // If it's a domain/policy error, we might need a direct user interaction
+                        if (err.name === 'NotAllowedError') {
+                            toast({
+                                title: "Interaction Required",
+                                description: "Please tap the play button again.",
+                            });
+                        }
+                        onError(err);
+                    });
+                }
+                return audio;
+            } catch (err) {
+                onError(err);
+                return null;
+            }
         }
 
-        // TTS proxy
-        const ttsUrl = `/api/tts?text=${encodeURIComponent(word)}`;
-        const audio = new Audio(ttsUrl);
-        audioRef.current = audio;
-        audio.onended = onEnded;
-        audio.onerror = () => {
-            // Fallback to Web Speech API
-            window.speechSynthesis.cancel();
-            const utterance = new SpeechSynthesisUtterance(word);
-            utterance.lang = 'ar-SA';
-            utterance.rate = 0.85;
-            const voices = window.speechSynthesis.getVoices();
-            const arabicVoice = voices.find(v => v.lang.startsWith('ar'));
-            if (arabicVoice) utterance.voice = arabicVoice;
-            utterance.onend = onEnded;
-            utterance.onerror = onEnded;
-            window.speechSynthesis.speak(utterance);
-            setPlayingWord(word);
+        // TTS fallback (only if no audioUrl)
+        // Check if browser supports Web Speech API
+        if (!window.speechSynthesis) {
+            toast({
+                title: "Not Supported",
+                description: "Voice synthesis is not supported on this browser.",
+                variant: "destructive"
+            });
+            return null;
+        }
+
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(word);
+        // Detect language and set voice
+        const isArabic = /[\u0600-\u06FF]/.test(word);
+        utterance.lang = isArabic ? 'ar-SA' : (lang === 'en' ? 'en-US' : 'ur-PK');
+        utterance.rate = 0.9;
+        
+        const voices = window.speechSynthesis.getVoices();
+        const preferredVoice = voices.find(v => v.lang.startsWith(isArabic ? 'ar' : (lang === 'en' ? 'en' : 'ur')));
+        if (preferredVoice) utterance.voice = preferredVoice;
+
+        utterance.onend = onEnded;
+        utterance.onerror = (e) => {
+            console.error("TTS Error:", e);
+            onEnded();
         };
-        audio.play().catch(() => {
-            const utterance = new SpeechSynthesisUtterance(word);
-            utterance.lang = 'ar-SA';
-            utterance.rate = 0.85;
-            const voices = window.speechSynthesis.getVoices();
-            const arabicVoice = voices.find(v => v.lang.startsWith('ar'));
-            if (arabicVoice) utterance.voice = arabicVoice;
-            utterance.onend = onEnded;
-            utterance.onerror = onEnded;
-            window.speechSynthesis.speak(utterance);
-            setPlayingWord(word);
-        });
-        return audio;
-    }, []);
+
+        window.speechSynthesis.speak(utterance);
+        setPlayingWord(word);
+        return null;
+    }, [lang, toast]);
 
     // Main toggle: play → pause → resume from same spot
     const handleListen = useCallback((word: string, audioUrl?: string) => {
@@ -578,27 +625,39 @@ export default function Library() {
 
         // If this exact audio is paused → resume from where we left off
         if (pausedWord === word && audioRef.current) {
-            audioRef.current.play().catch(() => { });
-            setPlayingWord(word);
-            setPausedWord(null);
+            const playPromise = audioRef.current.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    setPlayingWord(word);
+                    setPausedWord(null);
+                }).catch(err => {
+                    console.error("Resume failed:", err);
+                    startAudio(word, audioUrl); // Fallback to restart
+                });
+            } else {
+                setPlayingWord(word);
+                setPausedWord(null);
+            }
             return;
         }
 
-        // Otherwise stop anything currently playing and start fresh
+        // Stop current
         if (audioRef.current) {
             audioRef.current.pause();
+            audioRef.current.src = "";
             audioRef.current = null;
         }
         window.speechSynthesis.cancel();
+        
+        // Start fresh
         setPausedWord(null);
         setPlayingWord(word);
         startAudio(word, audioUrl);
 
-        // Increment dua listen count for achievement
+        // Achievement logic
         const currentCount = parseInt(localStorage.getItem("duas_listened_count") || "0");
         const nextCount = currentCount + 1;
         localStorage.setItem("duas_listened_count", nextCount.toString());
-        // Periodically sync with backend if we reach thresholds (e.g. 5)
         if (nextCount >= 5) {
             checkAchievements({ duasListened: nextCount });
         }

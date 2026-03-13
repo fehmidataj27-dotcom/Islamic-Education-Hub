@@ -52,7 +52,7 @@ import arabesqueDivider from "@/assets/images/arabesque_divider.png";
 import patternHero from "@/assets/images/islamic_pattern_hero.png";
 import patternDark from "@/assets/images/islamic_pattern_dark.png";
 import prayerRug from "@/assets/images/namaz/prayer_rug.png";
-import logoImg from "@/assets/images/logo.jpg";
+import logoImg from "@/assets/images/logo-transparent.png";
 import { WisdomManager } from "@/components/WisdomManager";
 
 export default function Dashboard() {
@@ -128,8 +128,13 @@ export default function Dashboard() {
             <div className="space-y-10 max-w-2xl text-center xl:text-left">
               <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="space-y-4">
                 <div className="flex items-center justify-center xl:justify-start gap-4 mb-2">
-                  <div className="w-16 h-12 rounded-xl bg-white shadow-xl overflow-hidden shrink-0 border-2 border-amber-500/20">
-                    <img src={logoImg} alt="Saut-ul-Quran" className="w-full h-full object-cover" />
+                  <div className="relative group shrink-0 transition-transform hover:scale-110 duration-500 w-24 h-24 flex items-center justify-center">
+                    <div className="absolute inset-2 bg-white/90 blur-[24px] rounded-full opacity-100 scale-150" />
+                    <img 
+                      src={logoImg} 
+                      alt="Saut-ul-Quran" 
+                      className="w-24 h-24 object-contain relative z-10" 
+                    />
                   </div>
                   <div className="space-y-0.5">
                     <div className="flex items-center gap-2">

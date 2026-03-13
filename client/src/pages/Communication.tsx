@@ -45,14 +45,14 @@ const VoiceWaveform = ({ active }: { active: boolean }) => (
 const MOCK_CALLS = [
     { id: 1, name: "Api Jan Hafiza Wajiha", type: "incoming", callType: "video", time: "2:30 PM", status: "missed" },
     { id: 2, name: "Admin Office", type: "outgoing", callType: "audio", time: "Yesterday", status: "completed" },
-    { id: 3, name: "Saut-ul-Quran Main Group", type: "incoming", callType: "audio", time: "Monday", status: "completed" },
+    { id: 3, name: "Islamic Hub Main Group", type: "incoming", callType: "audio", time: "Monday", status: "completed" },
 ];
 
 const MOCK_STATUSES = [
     { id: 1, name: "My Status", time: "Tap to add", avatar: "", isSelf: true },
     { id: 2, name: "Api Jan Hafiza Wajiha", time: "12 minutes ago", avatar: "📖", isNew: true },
     { id: 3, name: "Admin Office", time: "2 hours ago", avatar: "🕌", isNew: false },
-    { id: 4, name: "Saut-ul-Quran Main Group", time: "Today, 10:15 AM", avatar: "✨", isNew: true },
+    { id: 4, name: "Islamic Hub Main Group", time: "Today, 10:15 AM", avatar: "✨", isNew: true },
 ];
 
 const blobToBase64 = (blob: Blob | File): Promise<string> => {
@@ -318,7 +318,7 @@ export default function Communication() {
     const messages = activeConv?.messages || [];
 
     return (
-        <div className="h-[calc(100dvh-120px)] md:h-[calc(100vh-2rem)] w-full rounded-[1.5rem] md:rounded-[2rem] border-none bg-white dark:bg-zinc-950 shadow-2xl overflow-hidden flex flex-col md:flex-row md:-mt-6">
+        <div className="h-[calc(100dvh-5rem)] md:h-[calc(100vh-2rem)] w-full rounded-[1.5rem] md:rounded-[2rem] border-none bg-white dark:bg-zinc-950 shadow-2xl overflow-hidden flex flex-col md:flex-row md:-mt-6">
             {/* Sidebar / Contact List */}
             <div className={`w-full md:w-[400px] lg:w-[450px] border-r border-zinc-100 dark:border-zinc-800 flex-col bg-[#f0f2f5] dark:bg-zinc-900/50 shrink-0 ${selectedId ? 'hidden md:flex' : 'flex'}`}>
                 <div className="p-4 bg-[#f0f2f5] dark:bg-zinc-900 space-y-4">
@@ -394,7 +394,7 @@ export default function Communication() {
                             loadingConvs ? (
                                 <div className="flex flex-col items-center justify-center p-12 gap-3">
                                     <Loader2 className="h-10 w-10 animate-spin text-emerald-600 opacity-40" />
-                                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-800/30">Loading your spiritual hub...</p>
+                                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-800/30">Loading your hub...</p>
                                 </div>
                             ) : (conversations?.filter(c => c.title.toLowerCase().includes(searchQuery.toLowerCase())) || []).map((contact) => (
                                 <div

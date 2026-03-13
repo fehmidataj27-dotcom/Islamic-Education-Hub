@@ -42,7 +42,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-import logoImg from "@/assets/images/logo.jpg";
+import logoImg from "@/assets/images/logo-transparent.png";
 
 export default function Layout({ children }: { children: ReactNode }) {
   const [location, setLocation] = useLocation();
@@ -89,22 +89,23 @@ export default function Layout({ children }: { children: ReactNode }) {
           <div className="absolute -bottom-6 -left-6 h-20 w-20 rounded-full bg-white/5" />
 
           <div className="relative z-10 flex items-center gap-3">
-            {/* Logo image — no padding, fills the card fully */}
-            <div className="w-20 h-14 rounded-xl bg-white shadow-md shadow-black/40 overflow-hidden shrink-0 ring-1 ring-white/40">
+            {/* Logo image — Cleanly merged with transparency and a soft halo for dark background visibility */}
+            <div className="relative group transition-transform hover:scale-110 duration-500 w-16 h-16 flex items-center justify-center">
+              <div className="absolute inset-1 bg-white/90 blur-[16px] rounded-full opacity-100 scale-150" />
               <img
                 src={logoImg}
                 alt="Saut-ul-Quran"
-                className="w-full h-full object-cover object-center"
+                className="w-16 h-16 object-contain relative z-10"
               />
             </div>
 
             {/* Text */}
             <div>
-              <h1 className="font-bold text-base text-white leading-tight tracking-wide">
+              <h1 className="font-bold text-lg text-white leading-tight tracking-wide">
                 Saut-ul-Quran
               </h1>
               <p className="text-[10px] text-white/80 font-medium uppercase tracking-widest mt-1">
-                Online Quran Academy
+                Knowledge & Wisdom
               </p>
             </div>
           </div>

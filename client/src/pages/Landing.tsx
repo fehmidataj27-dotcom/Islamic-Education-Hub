@@ -4,7 +4,7 @@ import { useTheme } from "@/hooks/use-theme";
 import { ArrowRight, BookOpen, Users, Award, Check } from "lucide-react";
 import { motion } from "framer-motion";
 
-import logoImg from "@/assets/images/logo.jpg";
+import logoImg from "@/assets/images/logo-transparent.png";
 import brandingImg from "@/assets/images/saut_ul_quran_main_branding.png";
 
 export default function Landing() {
@@ -14,10 +14,16 @@ export default function Landing() {
     <div className="min-h-screen bg-background">
       {/* Navbar */}
       <nav className="fixed w-full z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <img src={logoImg} alt="Saut-ul-Quran" className="h-10 w-10 object-contain" />
-            <span className="brand-text-premium text-xl">Saut-ul-Quran</span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="relative transition-transform hover:scale-110 duration-500">
+              <img 
+                src={logoImg} 
+                alt="Saut-ul-Quran" 
+                className="h-24 w-auto object-contain drop-shadow-md" 
+              />
+            </div>
+            <span className="brand-text-premium text-2xl hidden sm:block">Saut-ul-Quran</span>
           </div>
           <div className="flex items-center gap-4">
             <Link href="/login">
