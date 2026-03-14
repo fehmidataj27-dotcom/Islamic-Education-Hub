@@ -81,38 +81,58 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   const renderSidebar = (isMobile: boolean = false) => (
     <div className="flex flex-col h-full bg-card border-r border-border">
-      {/* ── Branded Header ── */}
-      <div className="relative overflow-hidden border-b border-border/50">
-        <div className="bg-gradient-to-br from-emerald-800 via-green-800 to-teal-900 px-4 py-4">
-          {/* Decorative orbs */}
-          <div className="absolute -top-8 -right-8 h-28 w-28 rounded-full bg-white/5" />
-          <div className="absolute -bottom-6 -left-6 h-20 w-20 rounded-full bg-white/5" />
+      {/* ── Premium Branded Header ── */}
+      <div className="relative overflow-hidden">
+        <div className="bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-900 px-5 pt-5 pb-4">
+          {/* Decorative Pattern Background */}
+          <div className="absolute inset-0 opacity-[0.04]" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='1' fill-rule='evenodd'%3E%3Ccircle cx='20' cy='20' r='2'/%3E%3Ccircle cx='0' cy='0' r='2'/%3E%3Ccircle cx='40' cy='40' r='2'/%3E%3C/g%3E%3C/svg%3E")`,
+            backgroundSize: '20px 20px'
+          }} />
 
-          <div className="relative z-10 flex items-center gap-3">
-            {/* Logo image — white pill background for perfect visibility on dark sidebar */}
-            <div className="relative group transition-transform hover:scale-105 duration-300 shrink-0">
-              <div className="bg-white rounded-xl shadow-lg shadow-black/20 px-2 py-1.5 flex items-center justify-center">
-                <img
-                  src={logoImg}
-                  alt="Hafiza Wajiha"
-                  className="h-10 w-auto object-contain"
-                />
+          {/* Glow orbs */}
+          <div className="absolute -top-10 -right-10 h-36 w-36 rounded-full bg-amber-400/10 blur-2xl" />
+          <div className="absolute -bottom-8 -left-8 h-24 w-24 rounded-full bg-emerald-400/10 blur-2xl" />
+
+          <div className="relative z-10">
+            {/* Logo Badge — premium golden-framed card */}
+            <div className="flex justify-center mb-3">
+              <div className="relative group transition-all hover:scale-[1.03] duration-300">
+                {/* Outer golden glow ring */}
+                <div className="absolute -inset-[2px] rounded-2xl bg-gradient-to-br from-amber-300 via-yellow-400 to-amber-500 opacity-80 blur-[2px]" />
+                {/* White inner card */}
+                <div className="relative bg-white rounded-2xl px-4 py-2.5 flex items-center justify-center shadow-xl">
+                  <img
+                    src={logoImg}
+                    alt="Saut ul Quran"
+                    className="h-12 w-auto object-contain"
+                  />
+                </div>
               </div>
             </div>
 
-            {/* Text */}
-            <div>
-              <h1 className="font-bold text-lg text-white leading-tight tracking-wide">
+            {/* Golden ornamental divider */}
+            <div className="flex items-center gap-2 mb-2.5">
+              <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent via-amber-400/60 to-transparent" />
+              <div className="text-amber-400 text-[10px]">✦</div>
+              <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent via-amber-400/60 to-transparent" />
+            </div>
+
+            {/* Brand text */}
+            <div className="text-center">
+              <h1 className="font-black text-base text-white leading-tight tracking-wide">
                 Hafiza Wajiha
               </h1>
-              <p className="text-[10px] text-white/80 font-medium uppercase tracking-widest mt-1">
-                Knowledge & Wisdom
+              <p className="text-[9px] text-amber-300/90 font-semibold uppercase tracking-[0.25em] mt-0.5">
+                Online Quran Academy
               </p>
             </div>
           </div>
         </div>
-      </div>
 
+        {/* Bottom golden accent line */}
+        <div className="h-[2px] bg-gradient-to-r from-transparent via-amber-400/70 to-transparent" />
+      </div>
 
       <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
         {filteredNavigation.map((item) => {

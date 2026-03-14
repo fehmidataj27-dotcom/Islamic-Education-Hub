@@ -127,23 +127,31 @@ export default function Dashboard() {
           <div className="relative z-20 px-12 md:px-20 py-10 w-full max-w-7xl mx-auto flex flex-col xl:flex-row justify-between items-center gap-12">
             <div className="space-y-10 max-w-2xl text-center xl:text-left">
               <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="space-y-4">
-                <div className="flex items-center justify-center xl:justify-start gap-4 mb-2">
-                  {/* Logo on white card for clear visibility on dark hero */}
-                  <div className="relative group shrink-0 transition-transform hover:scale-105 duration-300">
-                    <div className="bg-white rounded-2xl shadow-2xl shadow-black/30 px-4 py-2.5 flex items-center justify-center">
+                <div className="flex items-center justify-center xl:justify-start gap-5 mb-2">
+                  {/* Premium golden-framed logo badge */}
+                  <div className="relative group shrink-0 transition-all hover:scale-105 duration-300">
+                    {/* Animated outer golden ring */}
+                    <div className="absolute -inset-[2px] rounded-2xl bg-gradient-to-br from-amber-300 via-yellow-400 to-amber-500 opacity-90 blur-[2px] group-hover:opacity-100 transition-opacity" />
+                    {/* White inner card */}
+                    <div className="relative bg-white rounded-2xl px-5 py-3 flex items-center justify-center shadow-2xl shadow-black/40">
                       <img 
                         src={logoImg} 
-                        alt="Hafiza Wajiha" 
-                        className="h-14 w-auto object-contain" 
+                        alt="Saut ul Quran" 
+                        className="h-16 w-auto object-contain" 
                       />
                     </div>
                   </div>
-                  <div className="space-y-0.5">
+
+                  {/* Branding text with ornamental styling */}
+                  <div className="space-y-1.5">
                     <div className="flex items-center gap-2">
-                      <div className="h-0.5 w-8 bg-amber-500" />
-                      <span className="brand-text-premium text-[11px] uppercase tracking-[0.3em]">Hafiza Wajiha Online Academy</span>
+                      <div className="h-[1px] w-6 bg-amber-400" />
+                      <span className="text-amber-400 text-[9px] font-black uppercase tracking-[0.35em]">Hafiza Wajiha Online Academy</span>
                     </div>
-                    <span className="text-emerald-300/60 font-medium uppercase tracking-[0.4em] text-[8px] block">The Path of Sacred Knowledge</span>
+                    <div className="flex items-center gap-2">
+                      <div className="h-[1px] w-4 bg-white/20" />
+                      <span className="text-emerald-300/60 font-medium uppercase tracking-[0.4em] text-[8px]">The Path of Sacred Knowledge</span>
+                    </div>
                   </div>
                 </div>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
