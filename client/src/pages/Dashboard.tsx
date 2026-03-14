@@ -124,12 +124,12 @@ export default function Dashboard() {
           <div className="absolute inset-0 bg-gradient-to-r from-emerald-950/95 via-emerald-950/40 to-transparent z-10" />
           <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-emerald-950/90 via-emerald-950/20 to-transparent z-10" />
 
-          <div className="relative z-20 px-12 md:px-20 py-10 w-full max-w-7xl mx-auto flex flex-col xl:flex-row justify-between items-center gap-12">
+          <div className="relative z-20 px-6 sm:px-12 md:px-20 py-10 w-full max-w-7xl mx-auto flex flex-col xl:flex-row justify-between items-center gap-12">
             <div className="space-y-10 max-w-2xl text-center xl:text-left">
               <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="space-y-4">
-                <div className="flex items-center justify-center xl:justify-start gap-6 mb-2">
+                <div className="flex flex-col sm:flex-row items-center justify-center xl:justify-start gap-4 sm:gap-6 mb-2">
                   {/* Triple-ring animated golden logo badge */}
-                  <div className="relative group shrink-0">
+                  <div className="relative group shrink-0 scale-75 sm:scale-100">
                     {/* Outermost animated pulsing aura */}
                     <div className="absolute -inset-[8px] rounded-[26px] opacity-30 blur-xl animate-pulse" style={{ background: 'linear-gradient(135deg, #fbbf24, #f97316, #fbbf24)' }} />
                     {/* Golden gradient ring */}
@@ -139,20 +139,20 @@ export default function Dashboard() {
                       <img 
                         src={logoImg} 
                         alt="Saut ul Quran" 
-                        className="h-[72px] w-auto object-contain" 
+                        className="h-12 sm:h-[72px] w-auto object-contain" 
                       />
                     </div>
                   </div>
 
                   {/* Branding text */}
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <div className="h-[2px] w-8 bg-gradient-to-r from-amber-400 to-amber-600 rounded-full" />
-                      <span className="text-amber-400 text-[10px] font-black uppercase tracking-[0.4em]" style={{ textShadow: '0 0 12px rgba(251,191,36,0.5)' }}>Saut Ul Quran Online Academy</span>
+                  <div className="space-y-2 text-center sm:text-left">
+                    <div className="flex flex-col sm:flex-row items-center gap-2">
+                      <div className="h-[2px] w-8 bg-gradient-to-r from-amber-400 to-amber-600 rounded-full hidden sm:block" />
+                      <span className="text-amber-400 text-[10px] sm:text-[11px] font-black uppercase tracking-[0.2em] sm:tracking-[0.4em]" style={{ textShadow: '0 0 12px rgba(251,191,36,0.5)' }}>Saut Ul Quran Online Academy</span>
                     </div>
-                    <div className="flex items-center gap-2 pl-1">
-                      <div className="h-[1px] w-5 bg-white/15" />
-                      <span className="text-white/40 font-medium uppercase tracking-[0.4em] text-[8px]">The Path of Sacred Knowledge</span>
+                    <div className="flex items-center justify-center sm:justify-start gap-2 sm:pl-1">
+                      <div className="h-[1px] w-5 bg-white/15 hidden sm:block" />
+                      <span className="text-white/40 font-medium uppercase tracking-[0.2em] sm:tracking-[0.4em] text-[7px] sm:text-[8px]">The Path of Sacred Knowledge</span>
                     </div>
                   </div>
                 </div>
