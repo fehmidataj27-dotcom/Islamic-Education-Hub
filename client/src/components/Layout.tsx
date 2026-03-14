@@ -81,57 +81,75 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   const renderSidebar = (isMobile: boolean = false) => (
     <div className="flex flex-col h-full bg-card border-r border-border">
-      {/* ── Premium Branded Header ── */}
+      {/* ── Stunning Premium Branded Header ── */}
       <div className="relative overflow-hidden">
-        <div className="bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-900 px-5 pt-5 pb-4">
-          {/* Decorative Pattern Background */}
-          <div className="absolute inset-0 opacity-[0.04]" style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='1' fill-rule='evenodd'%3E%3Ccircle cx='20' cy='20' r='2'/%3E%3Ccircle cx='0' cy='0' r='2'/%3E%3Ccircle cx='40' cy='40' r='2'/%3E%3C/g%3E%3C/svg%3E")`,
-            backgroundSize: '20px 20px'
+        <div className="relative bg-gradient-to-b from-[#082918] via-[#0d3b26] to-[#082918] px-5 pt-6 pb-5">
+
+          {/* Radial golden glow behind logo */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-52 h-28 rounded-full blur-3xl" style={{ background: 'radial-gradient(ellipse, rgba(251,191,36,0.15) 0%, transparent 70%)' }} />
+
+          {/* Islamic 8-point star pattern overlay */}
+          <div className="absolute inset-0 opacity-[0.05]" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath fill='%23F59E0B' d='M20 2l2.5 8h8l-6.5 5 2.5 8-6.5-5-6.5 5 2.5-8-6.5-5h8z'/%3E%3C/svg%3E")`,
+            backgroundSize: '28px 28px'
           }} />
 
-          {/* Glow orbs */}
-          <div className="absolute -top-10 -right-10 h-36 w-36 rounded-full bg-amber-400/10 blur-2xl" />
-          <div className="absolute -bottom-8 -left-8 h-24 w-24 rounded-full bg-emerald-400/10 blur-2xl" />
+          {/* Corner accent gems */}
+          <div className="absolute top-2.5 left-3 flex gap-0.5">
+            <div className="w-[3px] h-3 rounded-full bg-amber-400/60" />
+            <div className="w-[3px] h-2 rounded-full bg-amber-400/30 self-end" />
+          </div>
+          <div className="absolute top-2.5 right-3 flex gap-0.5">
+            <div className="w-[3px] h-2 rounded-full bg-amber-400/30 self-end" />
+            <div className="w-[3px] h-3 rounded-full bg-amber-400/60" />
+          </div>
 
-          <div className="relative z-10">
-            {/* Logo Badge — premium golden-framed card */}
-            <div className="flex justify-center mb-3">
-              <div className="relative group transition-all hover:scale-[1.03] duration-300">
-                {/* Outer golden glow ring */}
-                <div className="absolute -inset-[2px] rounded-2xl bg-gradient-to-br from-amber-300 via-yellow-400 to-amber-500 opacity-80 blur-[2px]" />
-                {/* White inner card */}
-                <div className="relative bg-white rounded-2xl px-4 py-2.5 flex items-center justify-center shadow-xl">
-                  <img
-                    src={logoImg}
-                    alt="Saut ul Quran"
-                    className="h-12 w-auto object-contain"
-                  />
-                </div>
+          <div className="relative z-10 flex flex-col items-center">
+
+            {/* Logo — 3-layer animated golden frame */}
+            <div className="relative mb-4 group cursor-default">
+              {/* Outermost animated pulsing glow */}
+              <div className="absolute -inset-[6px] rounded-[22px] opacity-40 blur-lg animate-pulse" style={{ background: 'linear-gradient(135deg, #F59E0B, #EF4444, #F59E0B)' }} />
+              {/* Golden border ring */}
+              <div className="absolute -inset-[2px] rounded-[18px]" style={{ background: 'linear-gradient(135deg, #fbbf24, #f59e0b, #d97706, #fbbf24)' }} />
+              {/* Logo card */}
+              <div className="relative bg-white rounded-2xl px-5 py-3 flex items-center justify-center shadow-2xl transition-transform group-hover:scale-[1.02] duration-500">
+                <img src={logoImg} alt="Saut ul Quran" className="h-14 w-auto object-contain" />
               </div>
             </div>
 
-            {/* Golden ornamental divider */}
-            <div className="flex items-center gap-2 mb-2.5">
-              <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent via-amber-400/60 to-transparent" />
-              <div className="text-amber-400 text-[10px]">✦</div>
-              <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent via-amber-400/60 to-transparent" />
+            {/* Islamic star ornamental divider */}
+            <div className="flex items-center gap-1.5 mb-3 w-full">
+              <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent via-amber-500/70 to-amber-400" />
+              <div className="flex gap-1 items-center">
+                <div className="w-1 h-1 rounded-full bg-amber-400" />
+                <div className="text-amber-300 text-[12px] leading-none">✦</div>
+                <div className="w-1 h-1 rounded-full bg-amber-400" />
+              </div>
+              <div className="flex-1 h-[1px] bg-gradient-to-l from-transparent via-amber-500/70 to-amber-400" />
             </div>
 
-            {/* Brand text */}
-            <div className="text-center">
-              <h1 className="font-black text-base text-white leading-tight tracking-wide">
+            {/* Brand Text */}
+            <div className="text-center space-y-1 mb-3.5">
+              <h1 className="font-black text-[15px] text-white leading-none tracking-[0.06em]" style={{ textShadow: '0 0 24px rgba(251,191,36,0.4)' }}>
                 Hafiza Wajiha
               </h1>
-              <p className="text-[9px] text-amber-300/90 font-semibold uppercase tracking-[0.25em] mt-0.5">
-                Online Quran Academy
-              </p>
+              <div className="flex items-center justify-center gap-2">
+                <div className="w-4 h-[1px] bg-amber-400/50" />
+                <p className="text-[8px] font-bold text-amber-300 uppercase tracking-[0.3em]">Online Quran Academy</p>
+                <div className="w-4 h-[1px] bg-amber-400/50" />
+              </div>
             </div>
+
+            {/* Triple-line ornamental bottom bar */}
+            <div className="flex flex-col gap-1 w-full">
+              <div className="h-[1px] bg-gradient-to-r from-transparent via-amber-400/80 to-transparent" />
+              <div className="h-[2px] bg-gradient-to-r from-transparent via-amber-500/30 to-transparent" />
+              <div className="h-[1px] bg-gradient-to-r from-transparent via-amber-400/15 to-transparent" />
+            </div>
+
           </div>
         </div>
-
-        {/* Bottom golden accent line */}
-        <div className="h-[2px] bg-gradient-to-r from-transparent via-amber-400/70 to-transparent" />
       </div>
 
       <nav className="flex-1 p-4 space-y-1 overflow-y-auto">

@@ -127,30 +127,32 @@ export default function Dashboard() {
           <div className="relative z-20 px-12 md:px-20 py-10 w-full max-w-7xl mx-auto flex flex-col xl:flex-row justify-between items-center gap-12">
             <div className="space-y-10 max-w-2xl text-center xl:text-left">
               <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="space-y-4">
-                <div className="flex items-center justify-center xl:justify-start gap-5 mb-2">
-                  {/* Premium golden-framed logo badge */}
-                  <div className="relative group shrink-0 transition-all hover:scale-105 duration-300">
-                    {/* Animated outer golden ring */}
-                    <div className="absolute -inset-[2px] rounded-2xl bg-gradient-to-br from-amber-300 via-yellow-400 to-amber-500 opacity-90 blur-[2px] group-hover:opacity-100 transition-opacity" />
-                    {/* White inner card */}
-                    <div className="relative bg-white rounded-2xl px-5 py-3 flex items-center justify-center shadow-2xl shadow-black/40">
+                <div className="flex items-center justify-center xl:justify-start gap-6 mb-2">
+                  {/* Triple-ring animated golden logo badge */}
+                  <div className="relative group shrink-0">
+                    {/* Outermost animated pulsing aura */}
+                    <div className="absolute -inset-[8px] rounded-[26px] opacity-30 blur-xl animate-pulse" style={{ background: 'linear-gradient(135deg, #fbbf24, #f97316, #fbbf24)' }} />
+                    {/* Golden gradient ring */}
+                    <div className="absolute -inset-[3px] rounded-[22px]" style={{ background: 'linear-gradient(135deg, #fbbf24, #f59e0b, #d97706, #fbbf24)' }} />
+                    {/* White logo card */}
+                    <div className="relative bg-white rounded-[20px] px-6 py-4 flex items-center justify-center shadow-2xl shadow-black/50 transition-transform group-hover:scale-[1.03] duration-500">
                       <img 
                         src={logoImg} 
                         alt="Saut ul Quran" 
-                        className="h-16 w-auto object-contain" 
+                        className="h-[72px] w-auto object-contain" 
                       />
                     </div>
                   </div>
 
-                  {/* Branding text with ornamental styling */}
-                  <div className="space-y-1.5">
+                  {/* Branding text */}
+                  <div className="space-y-2">
                     <div className="flex items-center gap-2">
-                      <div className="h-[1px] w-6 bg-amber-400" />
-                      <span className="text-amber-400 text-[9px] font-black uppercase tracking-[0.35em]">Hafiza Wajiha Online Academy</span>
+                      <div className="h-[2px] w-8 bg-gradient-to-r from-amber-400 to-amber-600 rounded-full" />
+                      <span className="text-amber-400 text-[10px] font-black uppercase tracking-[0.4em]" style={{ textShadow: '0 0 12px rgba(251,191,36,0.5)' }}>Hafiza Wajiha Online Academy</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <div className="h-[1px] w-4 bg-white/20" />
-                      <span className="text-emerald-300/60 font-medium uppercase tracking-[0.4em] text-[8px]">The Path of Sacred Knowledge</span>
+                    <div className="flex items-center gap-2 pl-1">
+                      <div className="h-[1px] w-5 bg-white/15" />
+                      <span className="text-white/40 font-medium uppercase tracking-[0.4em] text-[8px]">The Path of Sacred Knowledge</span>
                     </div>
                   </div>
                 </div>
