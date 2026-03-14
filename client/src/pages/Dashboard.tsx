@@ -9,7 +9,8 @@ import {
   useUserGroups,
   useDailyWisdom,
   useCreateWisdom,
-  useAllWisdom
+  useAllWisdom,
+  useResources
 } from "@/hooks/use-resources";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@shared/routes";
@@ -37,6 +38,7 @@ import {
   ChevronRight,
   Layers,
   Star,
+  Activity,
   User as UserIcon,
   Loader2,
   Pause,
@@ -45,7 +47,6 @@ import {
   Play
 } from "lucide-react";
 import { useCallback, useRef, useState } from "react";
-import { useResources } from "@/hooks/use-resources";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "wouter";
 import { format } from "date-fns";
