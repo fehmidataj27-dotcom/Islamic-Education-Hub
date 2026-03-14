@@ -152,7 +152,7 @@ export default function Dashboard() {
                     </div>
                     <div className="flex items-center justify-center sm:justify-start gap-2 sm:pl-1">
                       <div className="h-[1px] w-5 bg-white/15 hidden sm:block" />
-                      <span className="text-white/40 font-medium uppercase tracking-[0.2em] sm:tracking-[0.4em] text-[7px] sm:text-[8px]">The Path of Sacred Knowledge</span>
+                      <span className="text-amber-200/90 font-bold uppercase tracking-[0.2em] sm:tracking-[0.4em] text-[7px] sm:text-[8px]">The Path of Sacred Knowledge</span>
                     </div>
                   </div>
                 </div>
