@@ -4,7 +4,7 @@ import { useTheme } from "@/hooks/use-theme";
 import { ArrowRight, BookOpen, Users, Award, Check } from "lucide-react";
 import { motion } from "framer-motion";
 
-import logoImg from "@/assets/images/logo-transparent.png";
+import logoImg from "@/assets/images/wajiha-logo.png";
 import brandingImg from "@/assets/images/saut_ul_quran_main_branding.png";
 
 export default function Landing() {
@@ -19,11 +19,11 @@ export default function Landing() {
             <div className="relative transition-transform hover:scale-110 duration-500">
               <img 
                 src={logoImg} 
-                alt="Saut-ul-Quran" 
+                alt="Hafiza Wajiha" 
                 className="h-24 w-auto object-contain drop-shadow-md" 
               />
             </div>
-            <span className="brand-text-premium text-2xl hidden sm:block">Saut-ul-Quran</span>
+            <span className="brand-text-premium text-2xl hidden sm:block">Hafiza Wajiha</span>
           </div>
           <div className="flex items-center gap-4">
             <Link href="/login">
@@ -47,7 +47,7 @@ export default function Landing() {
             transition={{ duration: 0.6 }}
           >
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground leading-tight tracking-tight mb-4">
-              <span className="brand-text-premium text-[0.6em] block mb-2 uppercase tracking-[0.4em]">Saut-ul-Quran</span>
+              <span className="brand-text-premium text-[0.6em] block mb-2 uppercase tracking-[0.4em]">Hafiza Wajiha</span>
               Master Islamic Sciences <br />
               <span className="text-primary">Anytime, Anywhere</span>
             </h1>
@@ -86,7 +86,7 @@ export default function Landing() {
             {/* Premium Generated Islamic Graphic */}
             <img
               src={brandingImg}
-              alt="Saut-ul-Quran Sacred Knowledge"
+              alt="Hafiza Wajiha Sacred Knowledge"
               className="relative rounded-[2.5rem] shadow-2xl border-4 border-white/20 rotate-1 hover:rotate-0 transition-all duration-700 emerald-glow"
             />
           </motion.div>

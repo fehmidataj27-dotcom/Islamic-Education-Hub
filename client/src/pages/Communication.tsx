@@ -767,7 +767,7 @@ export default function Communication() {
                                                         </div>
                                                         <div>
                                                             <h4 className="font-black text-lg leading-none">Spiritual Progress</h4>
-                                                            <p className="text-[10px] uppercase font-bold tracking-widest text-emerald-200 mt-1">Saut-ul-Quran Achievements</p>
+                                                            <p className="text-[10px] uppercase font-bold tracking-widest text-emerald-200 mt-1">Hafiza Wajiha Achievements</p>
                                                         </div>
                                                     </div>
                                                     <div className="space-y-2">
@@ -880,7 +880,7 @@ export default function Communication() {
 
                         <div className="text-center z-10">
                             <h2 className="text-5xl font-black text-emerald-950 dark:text-emerald-50 mb-4 tracking-tighter">
-                                Saut-ul-Quran <span className="text-emerald-600">Portal</span>
+                                Hafiza Wajiha <span className="text-emerald-600">Portal</span>
                             </h2>
                             <p className="text-[13px] font-black text-zinc-400 uppercase tracking-[0.4em] text-center max-w-sm leading-relaxed mb-10 mx-auto">
                                 Start your secure spiritual journey<br />with a blessed conversation.

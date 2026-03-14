@@ -342,7 +342,7 @@ export default function ProgressReports() {
                         <Button
                             variant="outline"
                             className="h-14 px-8 rounded-2xl bg-white border-emerald-200 text-emerald-700 hover:bg-emerald-50 shadow-xl shadow-emerald-100/20 font-black text-sm gap-3 transition-all active:scale-95"
-                            onClick={handleDownload}
+                            onClick={() => handleDownload()}
                             disabled={downloading}
                         >
                             {downloading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Download className="h-5 w-5" />}
@@ -407,10 +407,10 @@ export default function ProgressReports() {
                                 <div className="hidden print-only bg-emerald-950 p-8 text-white flex justify-between items-center">
                                     <div className="flex items-center gap-4">
                                         <div className="w-16 h-16 bg-white p-2 rounded-xl">
-                                            <img src="/src/assets/images/logo.jpg" alt="Saut-ul-Quran" className="w-full h-full object-contain" />
+                                            <img src="/src/assets/images/wajiha-logo.png" alt="Hafiza Wajiha" className="w-full h-full object-contain" />
                                         </div>
                                         <div>
-                                            <h1 className="text-2xl font-black tracking-tight">SAUT-UL-QURAN</h1>
+                                            <h1 className="text-2xl font-black tracking-tight">HAFIZA WAJIHA</h1>
                                             <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-emerald-400">Online Quran Academy</p>
                                         </div>
                                     </div>
@@ -660,11 +660,11 @@ export default function ProgressReports() {
                                                     </div>
                                                     <div className="flex items-center gap-6">
                                                         <div className="text-right">
-                                                            <p className="text-lg font-black text-emerald-600 tracking-tighter">{Math.round((r.score / r.total) * 100)}%</p>
+                                                            <p className="text-lg font-black text-emerald-600 tracking-tighter">{Math.round(((r.score || 0) / (r.total || 1)) * 100)}%</p>
                                                             <p className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">Score Mastery</p>
                                                         </div>
-                                                        <Badge className={cn("px-3 py-1 rounded-full font-black text-[10px]", getGrade((r.score / r.total) * 100).bg, getGrade((r.score / r.total) * 100).color)}>
-                                                            {getGrade((r.score / r.total) * 100).label}
+                                                        <Badge className={cn("px-3 py-1 rounded-full font-black text-[10px]", getGrade(((r.score || 0) / (r.total || 1)) * 100).bg, getGrade(((r.score || 0) / (r.total || 1)) * 100).color)}>
+                                                            {getGrade(((r.score || 0) / (r.total || 1)) * 100).label}
                                                         </Badge>
                                                     </div>
                                                 </div>

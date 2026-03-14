@@ -52,7 +52,7 @@ import arabesqueDivider from "@/assets/images/arabesque_divider.png";
 import patternHero from "@/assets/images/islamic_pattern_hero.png";
 import patternDark from "@/assets/images/islamic_pattern_dark.png";
 import prayerRug from "@/assets/images/namaz/prayer_rug.png";
-import logoImg from "@/assets/images/logo-transparent.png";
+import logoImg from "@/assets/images/wajiha-logo.png";
 import { WisdomManager } from "@/components/WisdomManager";
 
 export default function Dashboard() {
@@ -132,14 +132,14 @@ export default function Dashboard() {
                     <div className="absolute inset-2 bg-white/90 blur-[24px] rounded-full opacity-100 scale-150" />
                     <img 
                       src={logoImg} 
-                      alt="Saut-ul-Quran" 
+                      alt="Hafiza Wajiha" 
                       className="w-24 h-24 object-contain relative z-10" 
                     />
                   </div>
                   <div className="space-y-0.5">
                     <div className="flex items-center gap-2">
                       <div className="h-0.5 w-8 bg-amber-500" />
-                      <span className="brand-text-premium text-[11px] uppercase tracking-[0.3em]">Saut-ul-Quran Online Academy</span>
+                      <span className="brand-text-premium text-[11px] uppercase tracking-[0.3em]">Hafiza Wajiha Online Academy</span>
                     </div>
                     <span className="text-emerald-300/60 font-medium uppercase tracking-[0.4em] text-[8px] block">The Path of Sacred Knowledge</span>
                   </div>

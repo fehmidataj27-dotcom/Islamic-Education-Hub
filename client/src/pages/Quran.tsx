@@ -33,7 +33,7 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 
 import { TajweedText } from "@/components/TajweedText";
-import logoImg from "@/assets/images/logo.jpg";
+import logoImg from "@/assets/images/wajiha-logo.png";
 
 interface Ayah {
   number: number;
@@ -180,11 +180,11 @@ export default function Quran() {
             whileHover={{ scale: 1.05 }}
             className="w-20 h-16 rounded-2xl overflow-hidden shrink-0 flex items-center justify-center"
           >
-            <img src={logoImg} alt="Saut-ul-Quran" className="w-full h-full object-contain mix-blend-multiply" />
+            <img src={logoImg} alt="Hafiza Wajiha" className="w-full h-full object-contain mix-blend-multiply" />
           </motion.div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="brand-text-premium text-2xl">Saut-ul-Quran</span>
+              <span className="brand-text-premium text-2xl">Hafiza Wajiha</span>
             </div>
             <h1 className="text-3xl font-black tracking-tight text-primary leading-none mt-1">
               {lang === 'en' ? 'Quran & Tajweed' : 'قرآن و تجوید'}

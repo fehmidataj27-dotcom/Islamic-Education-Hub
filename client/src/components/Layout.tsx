@@ -42,7 +42,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-import logoImg from "@/assets/images/logo-transparent.png";
+import logoImg from "@/assets/images/wajiha-logo.png";
 
 export default function Layout({ children }: { children: ReactNode }) {
   const [location, setLocation] = useLocation();
@@ -94,7 +94,7 @@ export default function Layout({ children }: { children: ReactNode }) {
               <div className="absolute inset-1 bg-white/90 blur-[16px] rounded-full opacity-100 scale-150" />
               <img
                 src={logoImg}
-                alt="Saut-ul-Quran"
+                alt="Hafiza Wajiha"
                 className="w-16 h-16 object-contain relative z-10"
               />
             </div>
@@ -102,7 +102,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             {/* Text */}
             <div>
               <h1 className="font-bold text-lg text-white leading-tight tracking-wide">
-                Saut-ul-Quran
+                Hafiza Wajiha
               </h1>
               <p className="text-[10px] text-white/80 font-medium uppercase tracking-widest mt-1">
                 Knowledge & Wisdom
