@@ -89,14 +89,15 @@ export default function Layout({ children }: { children: ReactNode }) {
           <div className="absolute -bottom-6 -left-6 h-20 w-20 rounded-full bg-white/5" />
 
           <div className="relative z-10 flex items-center gap-3">
-            {/* Logo image — Cleanly merged with transparency and a soft halo for dark background visibility */}
-            <div className="relative group transition-transform hover:scale-110 duration-500 w-16 h-16 flex items-center justify-center">
-              <div className="absolute inset-1 bg-white/90 blur-[16px] rounded-full opacity-100 scale-150" />
-              <img
-                src={logoImg}
-                alt="Hafiza Wajiha"
-                className="w-16 h-16 object-contain relative z-10"
-              />
+            {/* Logo image — white pill background for perfect visibility on dark sidebar */}
+            <div className="relative group transition-transform hover:scale-105 duration-300 shrink-0">
+              <div className="bg-white rounded-xl shadow-lg shadow-black/20 px-2 py-1.5 flex items-center justify-center">
+                <img
+                  src={logoImg}
+                  alt="Hafiza Wajiha"
+                  className="h-10 w-auto object-contain"
+                />
+              </div>
             </div>
 
             {/* Text */}

@@ -128,13 +128,15 @@ export default function Dashboard() {
             <div className="space-y-10 max-w-2xl text-center xl:text-left">
               <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="space-y-4">
                 <div className="flex items-center justify-center xl:justify-start gap-4 mb-2">
-                  <div className="relative group shrink-0 transition-transform hover:scale-110 duration-500 w-24 h-24 flex items-center justify-center">
-                    <div className="absolute inset-2 bg-white/90 blur-[24px] rounded-full opacity-100 scale-150" />
-                    <img 
-                      src={logoImg} 
-                      alt="Hafiza Wajiha" 
-                      className="w-24 h-24 object-contain relative z-10" 
-                    />
+                  {/* Logo on white card for clear visibility on dark hero */}
+                  <div className="relative group shrink-0 transition-transform hover:scale-105 duration-300">
+                    <div className="bg-white rounded-2xl shadow-2xl shadow-black/30 px-4 py-2.5 flex items-center justify-center">
+                      <img 
+                        src={logoImg} 
+                        alt="Hafiza Wajiha" 
+                        className="h-14 w-auto object-contain" 
+                      />
+                    </div>
                   </div>
                   <div className="space-y-0.5">
                     <div className="flex items-center gap-2">

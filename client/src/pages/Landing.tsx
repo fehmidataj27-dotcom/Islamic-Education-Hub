@@ -16,12 +16,14 @@ export default function Landing() {
       <nav className="fixed w-full z-50 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="relative transition-transform hover:scale-110 duration-500">
-              <img 
-                src={logoImg} 
-                alt="Hafiza Wajiha" 
-                className="h-24 w-auto object-contain drop-shadow-md" 
-              />
+            <div className="relative transition-transform hover:scale-105 duration-300 shrink-0">
+              <div className="bg-white rounded-xl border border-gray-100 shadow-md px-3 py-1.5 flex items-center justify-center">
+                <img 
+                  src={logoImg} 
+                  alt="Hafiza Wajiha" 
+                  className="h-10 w-auto object-contain" 
+                />
+              </div>
             </div>
             <span className="brand-text-premium text-2xl hidden sm:block">Hafiza Wajiha</span>
           </div>

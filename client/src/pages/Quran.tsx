@@ -178,9 +178,11 @@ export default function Quran() {
         <div className="flex items-center gap-5">
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="w-20 h-16 rounded-2xl overflow-hidden shrink-0 flex items-center justify-center"
+            className="shrink-0"
           >
-            <img src={logoImg} alt="Hafiza Wajiha" className="w-full h-full object-contain mix-blend-multiply" />
+            <div className="bg-white rounded-xl shadow-md border border-gray-100 px-2 py-1.5 flex items-center justify-center">
+              <img src={logoImg} alt="Hafiza Wajiha" className="h-10 w-auto object-contain" />
+            </div>
           </motion.div>
           <div>
             <div className="flex items-center gap-2">
