@@ -186,7 +186,7 @@ export default function Quran() {
           </motion.div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="brand-text-premium text-2xl">Hafiza Wajiha</span>
+              <span className="brand-text-premium text-2xl">Saut Ul Quran</span>
             </div>
             <h1 className="text-3xl font-black tracking-tight text-primary leading-none mt-1">
               {lang === 'en' ? 'Quran & Tajweed' : 'قرآن و تجوید'}

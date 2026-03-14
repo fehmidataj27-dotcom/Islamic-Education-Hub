@@ -132,7 +132,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             {/* Brand Text */}
             <div className="text-center space-y-1 mb-3.5">
               <h1 className="font-black text-[15px] text-white leading-none tracking-[0.06em]" style={{ textShadow: '0 0 24px rgba(251,191,36,0.4)' }}>
-                Hafiza Wajiha
+                Saut Ul Quran
               </h1>
               <div className="flex items-center justify-center gap-2">
                 <div className="w-4 h-[1px] bg-amber-400/50" />

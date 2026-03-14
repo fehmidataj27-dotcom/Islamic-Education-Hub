@@ -25,7 +25,7 @@ export default function Landing() {
                 />
               </div>
             </div>
-            <span className="brand-text-premium text-2xl hidden sm:block">Hafiza Wajiha</span>
+            <span className="brand-text-premium text-2xl hidden sm:block">Saut Ul Quran</span>
           </div>
           <div className="flex items-center gap-4">
             <Link href="/login">
@@ -49,7 +49,7 @@ export default function Landing() {
             transition={{ duration: 0.6 }}
           >
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground leading-tight tracking-tight mb-4">
-              <span className="brand-text-premium text-[0.6em] block mb-2 uppercase tracking-[0.4em]">Hafiza Wajiha</span>
+              <span className="brand-text-premium text-[0.6em] block mb-2 uppercase tracking-[0.4em]">Saut Ul Quran</span>
               Master Islamic Sciences <br />
               <span className="text-primary">Anytime, Anywhere</span>
             </h1>

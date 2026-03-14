@@ -148,7 +148,7 @@ export default function Dashboard() {
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <div className="h-[2px] w-8 bg-gradient-to-r from-amber-400 to-amber-600 rounded-full" />
-                      <span className="text-amber-400 text-[10px] font-black uppercase tracking-[0.4em]" style={{ textShadow: '0 0 12px rgba(251,191,36,0.5)' }}>Hafiza Wajiha Online Academy</span>
+                      <span className="text-amber-400 text-[10px] font-black uppercase tracking-[0.4em]" style={{ textShadow: '0 0 12px rgba(251,191,36,0.5)' }}>Saut Ul Quran Online Academy</span>
                     </div>
                     <div className="flex items-center gap-2 pl-1">
                       <div className="h-[1px] w-5 bg-white/15" />
