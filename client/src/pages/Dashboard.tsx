@@ -128,32 +128,23 @@ export default function Dashboard() {
             <div className="space-y-10 max-w-2xl text-center xl:text-left">
               <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="space-y-4">
                 <div className="flex flex-col sm:flex-row items-center justify-center xl:justify-start gap-4 sm:gap-6 mb-2">
-                  {/* Triple-ring animated golden logo badge */}
-                  <div className="relative group shrink-0 scale-75 sm:scale-100">
-                    {/* Outermost animated pulsing aura */}
-                    <div className="absolute -inset-[8px] rounded-[26px] opacity-30 blur-xl animate-pulse" style={{ background: 'linear-gradient(135deg, #fbbf24, #f97316, #fbbf24)' }} />
-                    {/* Golden gradient ring */}
-                    <div className="absolute -inset-[3px] rounded-[22px]" style={{ background: 'linear-gradient(135deg, #fbbf24, #f59e0b, #d97706, #fbbf24)' }} />
-                    {/* White logo card */}
-                    <div className="relative bg-white rounded-[20px] px-6 py-4 flex items-center justify-center shadow-2xl shadow-black/50 transition-transform group-hover:scale-[1.03] duration-500">
-                      <img 
-                        src={logoImg} 
-                        alt="Saut ul Quran" 
-                        className="h-12 sm:h-[72px] w-auto object-contain" 
-                      />
-                    </div>
+                  {/* Clean Professional Logo Badge */}
+                  <div className="bg-white rounded-xl px-6 py-4 shadow-xl border border-white/10 overflow-hidden">
+                    <img 
+                      src={logoImg} 
+                      alt="Saut ul Quran" 
+                      className="h-12 sm:h-16 w-auto object-contain" 
+                    />
                   </div>
 
                   {/* Branding text */}
-                  <div className="space-y-2 text-center sm:text-left">
-                    <div className="flex flex-col sm:flex-row items-center gap-2">
-                      <div className="h-[2px] w-8 bg-gradient-to-r from-amber-400 to-amber-600 rounded-full hidden sm:block" />
-                      <span className="text-amber-400 text-[10px] sm:text-[11px] font-black uppercase tracking-[0.2em] sm:tracking-[0.4em]" style={{ textShadow: '0 0 12px rgba(251,191,36,0.5)' }}>Saut Ul Quran Online Academy</span>
-                    </div>
-                    <div className="flex items-center justify-center sm:justify-start gap-2 sm:pl-1">
-                      <div className="h-[1px] w-5 bg-white/15 hidden sm:block" />
-                      <span className="text-amber-200/90 font-bold uppercase tracking-[0.2em] sm:tracking-[0.4em] text-[7px] sm:text-[8px]">The Path of Sacred Knowledge</span>
-                    </div>
+                  <div className="text-center sm:text-left">
+                    <h2 className="text-amber-400 text-lg sm:text-xl font-bold uppercase tracking-wider">
+                      Saut Ul Quran
+                    </h2>
+                    <p className="text-white/60 font-medium uppercase tracking-[0.2em] text-[10px] sm:text-xs">
+                      Online Quran Academy
+                    </p>
                   </div>
                 </div>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
