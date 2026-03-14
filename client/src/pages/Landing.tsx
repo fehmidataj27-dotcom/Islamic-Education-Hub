@@ -25,7 +25,7 @@ export default function Landing() {
                 />
               </div>
             </div>
-            <span className="brand-text-premium text-2xl hidden sm:block">Saut Ul Quran</span>
+            <span className="brand-text-premium text-2xl hidden lg:block whitespace-nowrap">Saut Ul Quran</span>
           </div>
           <div className="flex items-center gap-4">
             <Link href="/login">
