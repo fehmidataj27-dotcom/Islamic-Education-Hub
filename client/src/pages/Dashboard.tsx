@@ -149,7 +149,7 @@ export default function Dashboard() {
         audioRef.current.pause();
         audioRef.current.currentTime = 0;
     }
-    window.speechSynthesis.cancel();
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
     setTimeout(() => startAudio(word, audioUrl), 50);
   };
 
@@ -308,8 +308,9 @@ export default function Dashboard() {
           </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {(allResources?.filter(r => r.type === 'dua').slice(0, 2) || []).map((item: any, idx) => {
+          {(Array.isArray(allResources) ? allResources.filter(r => r.type === 'dua').slice(0, 2) : []).map((item: any, idx) => {
             const content = item.content as any;
+            const arabicText = content?.arabic || item.title?.en || "Resource";
             return (
               <motion.div key={item.id} initial={{ opacity: 0, x: idx % 2 === 0 ? -20 : 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 + (idx * 0.1) }}>
                 <Card className="group/dua relative overflow-hidden bg-white rounded-[2.5rem] border-none shadow-[0_15px_50px_-15px_rgba(0,0,0,0.1)] hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.15)] transition-all duration-700 min-h-[320px] flex flex-col justify-between p-8 border border-white/40">
@@ -319,28 +320,28 @@ export default function Dashboard() {
                   <div className="relative z-10 flex flex-row items-center justify-between mb-8">
                     <div className="flex items-center gap-4">
                       <div className="w-14 h-14 bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-2xl shadow-xl shadow-emerald-900/10 flex items-center justify-center border-t-2 border-white/20">
-                         {item.title.en.toLowerCase().includes('nasheed') ? <Volume2 className="h-7 w-7" /> : <Sparkles className="h-7 w-7" />}
+                         {item.title?.en?.toLowerCase().includes('nasheed') ? <Volume2 className="h-7 w-7" /> : <Sparkles className="h-7 w-7" />}
                       </div>
                       <div>
-                        <h3 className="text-xl font-black text-slate-800 tracking-tight leading-tight">{item.title[lang]}</h3>
+                        <h3 className="text-xl font-black text-slate-800 tracking-tight leading-tight">{item.title?.[lang] || item.title?.en}</h3>
                         <div className="flex items-center gap-1.5 mt-1">
                             <div className="h-1 w-1 rounded-full bg-emerald-400" />
-                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{item.category} Highlight</span>
+                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{item.category?.en || 'Daily'} Highlight</span>
                         </div>
                       </div>
                     </div>
                     <div className="flex gap-3">
-                      <Button variant="secondary" size="icon" className="h-11 w-11 rounded-full bg-slate-50 text-slate-400 hover:bg-slate-100 hover:text-emerald-600 transition-all shadow-sm active:scale-90" onClick={() => handleRestart(content.arabic || item.title.en, content.audioUrl)}>
+                      <Button variant="secondary" size="icon" className="h-11 w-11 rounded-full bg-slate-50 text-slate-400 hover:bg-slate-100 hover:text-emerald-600 transition-all shadow-sm active:scale-90" onClick={() => handleRestart(arabicText, content?.audioUrl)}>
                         <RotateCcw className="h-5 w-5" />
                       </Button>
-                      <Button variant="secondary" size="icon" className={cn("h-14 w-14 rounded-full transition-all shadow-xl active:scale-95 border-2", playingWord === (content.arabic || item.title.en) ? "bg-amber-500 text-white border-amber-400" : "bg-white text-emerald-600 border-emerald-50 hover:bg-emerald-50")} onClick={() => handleListen(content.arabic || item.title.en, content.audioUrl)}>
-                        {playingWord === (content.arabic || item.title.en) ? <Pause className="h-7 w-7" /> : <Play className="h-7 w-7 fill-emerald-600" />}
+                      <Button variant="secondary" size="icon" className={cn("h-14 w-14 rounded-full transition-all shadow-xl active:scale-95 border-2", playingWord === arabicText ? "bg-amber-500 text-white border-amber-400" : "bg-white text-emerald-600 border-emerald-50 hover:bg-emerald-50")} onClick={() => handleListen(arabicText, content?.audioUrl)}>
+                        {playingWord === arabicText ? <Pause className="h-7 w-7" /> : <Play className="h-7 w-7 fill-emerald-600" />}
                       </Button>
                     </div>
                   </div>
 
                   <div className="relative z-10 space-y-6 flex-grow">
-                     {content.arabic ? (
+                     {content?.arabic ? (
                         <div className="text-center p-6 bg-slate-50/50 rounded-[2rem] border-2 border-slate-50 relative group-hover/dua:border-emerald-100 transition-all duration-500">
                           <p className="text-3xl font-arabic leading-loose text-slate-800 drop-shadow-sm mb-4" style={{ fontFamily: 'Al_Mushaf, serif' }}>
                             {content.arabic}
@@ -351,12 +352,12 @@ export default function Dashboard() {
                         </div>
                      ) : (
                         <div className="flex flex-col items-center justify-center py-10 opacity-30">
-                            <div className="text-4xl font-black text-slate-400 tracking-tighter uppercase mb-2">{item.title.en}</div>
+                            <div className="text-4xl font-black text-slate-400 tracking-tighter uppercase mb-2">{item.title?.en}</div>
                             <div className="h-1 w-12 bg-slate-200 rounded-full" />
                         </div>
                      )}
                      
-                     {(content.translation?.en || content.translation?.ur) && (
+                     {(content?.translation?.en || content?.translation?.ur) && (
                         <div className="space-y-4 px-2">
                            {content.translation.en && <p className="text-sm font-bold text-slate-600 leading-relaxed italic border-l-3 border-amber-500/30 pl-4">{content.translation.en}</p>}
                            {content.translation.ur && <p className="text-xl font-urdu text-emerald-800 leading-relaxed text-right border-r-3 border-emerald-500/30 pr-4" dir="rtl">{content.translation.ur}</p>}
