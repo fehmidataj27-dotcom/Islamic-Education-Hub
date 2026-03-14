@@ -37,10 +37,16 @@ import {
   ChevronRight,
   Layers,
   Star,
-  Activity,
   User as UserIcon,
-  Loader2
+  Loader2,
+  Pause,
+  RotateCcw,
+  Volume2,
+  Play
 } from "lucide-react";
+import { useCallback, useRef, useState } from "react";
+import { useResources } from "@/hooks/use-resources";
+import { useToast } from "@/hooks/use-toast";
 import { Link } from "wouter";
 import { format } from "date-fns";
 import { motion, AnimatePresence } from "framer-motion";
@@ -67,8 +73,83 @@ export default function Dashboard() {
   const createWisdom = useCreateWisdom();
   const updateStats = useUpdateDailyStats();
 
+  const { data: allResources } = useResources();
+  const { toast } = useToast();
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [playingWord, setPlayingWord] = useState<string | null>(null);
+
   const handleAttendance = () => {
     updateStats.mutate({ attendance: true });
+  };
+
+  const startAudio = useCallback((word: string, audioUrl?: string) => {
+    const onEnded = () => setPlayingWord(null);
+    const onError = (error: any) => {
+      console.error("Audio playback error:", error);
+      setPlayingWord(null);
+      const isNasheed = word.toLowerCase().includes('nasheed');
+      toast({
+        title: lang === 'en' ? "Playback Error" : "آڈیو چلانے میں خرابی",
+        description: lang === 'en' 
+          ? (isNasheed ? "The Nasheed audio file is missing or unsupported on this device." : "Your browser blocked audio or the file is unsupported. Try clicking again.")
+          : "آپ کے براؤزر نے آڈیو بلاک کر دی ہے یا فائل اس ڈیوائس پر نہیں چل سکتی۔",
+        variant: "destructive"
+      });
+    };
+
+    if (audioUrl) {
+      try {
+        if (audioRef.current) {
+          audioRef.current.pause();
+          audioRef.current.src = "";
+        }
+        const finalUrl = audioUrl.startsWith('/') ? audioUrl : `/${audioUrl}`;
+        const audio = new Audio(finalUrl);
+        audioRef.current = audio;
+        audio.onended = onEnded;
+        audio.onerror = onError;
+        audio.load();
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise.catch((err) => onError(err));
+        }
+        setPlayingWord(word);
+        return audio;
+      } catch (err) {
+        onError(err);
+        return null;
+      }
+    }
+
+    if (!window.speechSynthesis) return null;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(word);
+    const isArabic = /[\u0600-\u06FF]/.test(word);
+    utterance.lang = isArabic ? 'ar-SA' : (lang === 'en' ? 'en-US' : 'ur-PK');
+    utterance.onend = onEnded;
+    window.speechSynthesis.speak(utterance);
+    setPlayingWord(word);
+    return null;
+  }, [lang, toast]);
+
+  const handleListen = (word: string, audioUrl?: string) => {
+    if (playingWord === word) {
+      if (audioRef.current) audioRef.current.pause();
+      window.speechSynthesis.cancel();
+      setPlayingWord(null);
+    } else {
+      startAudio(word, audioUrl);
+    }
+  };
+
+  const handleRestart = (word: string, audioUrl?: string) => {
+    setPlayingWord(null);
+    if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+    }
+    window.speechSynthesis.cancel();
+    setTimeout(() => startAudio(word, audioUrl), 50);
   };
 
   const getGreeting = () => {
@@ -208,6 +289,85 @@ export default function Dashboard() {
           </div>
         </motion.div>
       </section>
+
+      {/* Daily Spiritual Highlights - Newly Restored Section */}
+      <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="max-w-7xl mx-auto px-4 mt-8">
+        <div className="flex items-center justify-between px-2 mb-4">
+          <div>
+            <h2 className="text-xl font-bold text-emerald-950 tracking-tight">{lang === 'en' ? 'Daily Reflections' : 'روزانہ کی بصیرت'}</h2>
+            <div className="flex items-center gap-2">
+                <div className="h-0.5 w-8 bg-amber-500/30" />
+                <p className="text-[10px] font-black text-amber-600 uppercase tracking-[0.2em]">{lang === 'en' ? 'Spiritual Nourishment' : 'روحانی غذا'}</p>
+            </div>
+          </div>
+          <Link href="/library">
+            <Button variant="ghost" size="sm" className="group text-emerald-700 font-bold hover:bg-emerald-50 rounded-xl gap-2 transition-all">
+                {lang === 'en' ? 'Explore Library' : 'لائبریری ملاحظہ کریں'} <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {(allResources?.filter(r => r.type === 'dua').slice(0, 2) || []).map((item: any, idx) => {
+            const content = item.content as any;
+            return (
+              <motion.div key={item.id} initial={{ opacity: 0, x: idx % 2 === 0 ? -20 : 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 + (idx * 0.1) }}>
+                <Card className="group/dua relative overflow-hidden bg-white rounded-[2.5rem] border-none shadow-[0_15px_50px_-15px_rgba(0,0,0,0.1)] hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.15)] transition-all duration-700 min-h-[320px] flex flex-col justify-between p-8 border border-white/40">
+                  <div className="absolute top-0 right-0 w-48 h-48 bg-emerald-50/50 rounded-full blur-3xl -translate-y-12 translate-x-12 opacity-50 group-hover:bg-amber-500/5 transition-colors duration-1000" />
+                  <div className="absolute bottom-0 left-0 w-32 h-32 bg-amber-100/30 rounded-full blur-2xl translate-y-12 -translate-x-8 opacity-40" />
+                  
+                  <div className="relative z-10 flex flex-row items-center justify-between mb-8">
+                    <div className="flex items-center gap-4">
+                      <div className="w-14 h-14 bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-2xl shadow-xl shadow-emerald-900/10 flex items-center justify-center border-t-2 border-white/20">
+                         {item.title.en.toLowerCase().includes('nasheed') ? <Volume2 className="h-7 w-7" /> : <Sparkles className="h-7 w-7" />}
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-black text-slate-800 tracking-tight leading-tight">{item.title[lang]}</h3>
+                        <div className="flex items-center gap-1.5 mt-1">
+                            <div className="h-1 w-1 rounded-full bg-emerald-400" />
+                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{item.category} Highlight</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex gap-3">
+                      <Button variant="secondary" size="icon" className="h-11 w-11 rounded-full bg-slate-50 text-slate-400 hover:bg-slate-100 hover:text-emerald-600 transition-all shadow-sm active:scale-90" onClick={() => handleRestart(content.arabic || item.title.en, content.audioUrl)}>
+                        <RotateCcw className="h-5 w-5" />
+                      </Button>
+                      <Button variant="secondary" size="icon" className={cn("h-14 w-14 rounded-full transition-all shadow-xl active:scale-95 border-2", playingWord === (content.arabic || item.title.en) ? "bg-amber-500 text-white border-amber-400" : "bg-white text-emerald-600 border-emerald-50 hover:bg-emerald-50")} onClick={() => handleListen(content.arabic || item.title.en, content.audioUrl)}>
+                        {playingWord === (content.arabic || item.title.en) ? <Pause className="h-7 w-7" /> : <Play className="h-7 w-7 fill-emerald-600" />}
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="relative z-10 space-y-6 flex-grow">
+                     {content.arabic ? (
+                        <div className="text-center p-6 bg-slate-50/50 rounded-[2rem] border-2 border-slate-50 relative group-hover/dua:border-emerald-100 transition-all duration-500">
+                          <p className="text-3xl font-arabic leading-loose text-slate-800 drop-shadow-sm mb-4" style={{ fontFamily: 'Al_Mushaf, serif' }}>
+                            {content.arabic}
+                          </p>
+                          <p className="text-[11px] text-slate-400 italic font-medium tracking-wide">
+                            {content.transliteration}
+                          </p>
+                        </div>
+                     ) : (
+                        <div className="flex flex-col items-center justify-center py-10 opacity-30">
+                            <div className="text-4xl font-black text-slate-400 tracking-tighter uppercase mb-2">{item.title.en}</div>
+                            <div className="h-1 w-12 bg-slate-200 rounded-full" />
+                        </div>
+                     )}
+                     
+                     {(content.translation?.en || content.translation?.ur) && (
+                        <div className="space-y-4 px-2">
+                           {content.translation.en && <p className="text-sm font-bold text-slate-600 leading-relaxed italic border-l-3 border-amber-500/30 pl-4">{content.translation.en}</p>}
+                           {content.translation.ur && <p className="text-xl font-urdu text-emerald-800 leading-relaxed text-right border-r-3 border-emerald-500/30 pr-4" dir="rtl">{content.translation.ur}</p>}
+                        </div>
+                     )}
+                  </div>
+                </Card>
+              </motion.div>
+            );
+          })}
+        </div>
+      </motion.section>
 
       {/* Main Stats Grid */}
       <motion.div variants={container} initial="hidden" animate="show" className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

@@ -530,11 +530,13 @@ export default function Library() {
             setPlayingWord(null);
             setPausedWord(null);
 
-            // Detailed feedback for mobile users
+            // Special case for "Nasheed" to provide clearer feedback
+            const isNasheed = word.toLowerCase().includes('nasheed');
+
             toast({
                 title: lang === 'en' ? "Playback Error" : "آڈیو چلانے میں خرابی",
                 description: lang === 'en' 
-                    ? "Your browser blocked audio or the file is unsupported. Try clicking again." 
+                    ? (isNasheed ? "The Nasheed audio file is missing or unsupported on this device." : "Your browser blocked audio or the file is unsupported. Try clicking again.")
                     : "آپ کے براؤزر نے آڈیو بلاک کر دی ہے یا فائل اس ڈیوائس پر نہیں چل سکتی۔",
                 variant: "destructive"
             });
@@ -561,9 +563,11 @@ export default function Library() {
 
                 const playPromise = audio.play();
                 if (playPromise !== undefined) {
-                    playPromise.catch((err) => {
+                    playPromise.then(() => {
+                        console.log("Audio playing successfully:", finalUrl);
+                    }).catch((err) => {
                         console.warn("Audio play promise failed:", err);
-                        // If it's a domain/policy error, we might need a direct user interaction
+                        // If it's a domain/policy error, it might need a direct user interaction
                         if (err.name === 'NotAllowedError') {
                             toast({
                                 title: "Interaction Required",
@@ -581,7 +585,6 @@ export default function Library() {
         }
 
         // TTS fallback (only if no audioUrl)
-        // Check if browser supports Web Speech API
         if (!window.speechSynthesis) {
             toast({
                 title: "Not Supported",
@@ -593,7 +596,6 @@ export default function Library() {
 
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(word);
-        // Detect language and set voice
         const isArabic = /[\u0600-\u06FF]/.test(word);
         utterance.lang = isArabic ? 'ar-SA' : (lang === 'en' ? 'en-US' : 'ur-PK');
         utterance.rate = 0.9;
