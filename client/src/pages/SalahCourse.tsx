@@ -26,6 +26,7 @@ import { useVideos, useDeleteVideo, useSalahProgress, useUpdateSalahProgress, us
 import { format } from "date-fns";
 import { useAuth } from "@/hooks/use-auth";
 import MediaUpload from "@/components/MediaUpload";
+import AnnouncementUpload from "@/components/AnnouncementUpload";
 import CourseTestSection from "@/components/CourseTestSection";
 import CourseNotesSection from "@/components/CourseNotesSection";
 import CourseGroupsSection from "@/components/CourseGroupsSection";
@@ -297,6 +298,10 @@ export default function SalahCourse() {
 
                             <TabsContent value="updates" className="mt-0">
                                 <div className="space-y-6">
+                                    <div className="flex justify-between items-center mb-6">
+                                        <h2 className="text-2xl font-black tracking-tight">{lang === 'en' ? 'Latest Updates' : 'تازہ ترین اپ ڈیٹس'}</h2>
+                                        <AnnouncementUpload category="Namaz" />
+                                    </div>
                                     {!announcements?.length ? (
                                         <Card className="p-12 text-center border-dashed">
                                             <div className="flex flex-col items-center gap-4 text-muted-foreground">

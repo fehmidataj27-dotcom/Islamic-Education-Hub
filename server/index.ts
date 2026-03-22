@@ -93,6 +93,16 @@ app.use((req, res, next) => {
       () => {
         log(`[DEBUG] Attempting to serve on 0.0.0.0:${port}`);
         log(`serving on port ${port}`);
+
+        // Keep-alive self-ping mechanism for free tiers (like Render)
+        if (process.env.NODE_ENV === "production" || process.env.RENDER_EXTERNAL_URL) {
+          const urlToPing = process.env.RENDER_EXTERNAL_URL || `http://localhost:${port}`;
+          log(`[KEEP-ALIVE] Initializing self-ping loop for ${urlToPing}`);
+          setInterval(() => {
+            log(`[KEEP-ALIVE] Pinging self to prevent sleep mode...`);
+            fetch(urlToPing).catch(err => console.error(`[KEEP-ALIVE] Self-ping failed:`, err.message));
+          }, 10 * 60 * 1000); // 10 minutes
+        }
       },
     );
   } catch (error: any) {

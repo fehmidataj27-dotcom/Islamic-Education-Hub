@@ -56,11 +56,13 @@ class AuthStorage implements IAuthStorage {
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(u => u.username === username);
+    const lower = username.toLowerCase();
+    return Array.from(this.users.values()).find(u => u.username?.toLowerCase() === lower);
   }
 
   async getUserByStudentId(studentId: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(u => u.studentId === studentId);
+    const lower = studentId.toLowerCase();
+    return Array.from(this.users.values()).find(u => u.studentId?.toLowerCase() === lower);
   }
 
   async upsertUser(userData: UpsertUser): Promise<User> {
@@ -112,21 +114,21 @@ class DatabaseAuthStorage implements IAuthStorage {
 
   async getUserByUsername(username: string): Promise<User | undefined> {
     const { db } = await import("../../db");
-    const { eq } = await import("drizzle-orm");
-    const [user] = await db.select().from(users).where(eq(users.username, username));
+    const { ilike } = await import("drizzle-orm");
+    const [user] = await db.select().from(users).where(ilike(users.username, username));
     return user;
   }
 
   async getUserByStudentId(studentId: string): Promise<User | undefined> {
     const { db } = await import("../../db");
-    const { eq } = await import("drizzle-orm");
-    const [user] = await db.select().from(users).where(eq(users.studentId, studentId));
+    const { ilike } = await import("drizzle-orm");
+    const [user] = await db.select().from(users).where(ilike(users.studentId, studentId));
     return user;
   }
 
   async upsertUser(userData: UpsertUser): Promise<User> {
     const { db } = await import("../../db");
-    const { eq, or } = await import("drizzle-orm");
+    const { eq, or, ilike } = await import("drizzle-orm");
     const id = userData.id || (userData as any).sub || "gen_" + Math.random().toString(36).substring(7);
 
     // First try to find by ID
@@ -134,13 +136,13 @@ class DatabaseAuthStorage implements IAuthStorage {
 
     // If not found by ID, try to find by email to avoid UNIQUE constraint errors
     if (!existing && userData.email) {
-      const [byEmail] = await db.select().from(users).where(eq(users.email, userData.email));
+      const [byEmail] = await db.select().from(users).where(ilike(users.email, userData.email));
       if (byEmail) existing = byEmail;
     }
 
     // If still not found, try by username
     if (!existing && userData.username) {
-      const [byUsername] = await db.select().from(users).where(eq(users.username, userData.username));
+      const [byUsername] = await db.select().from(users).where(ilike(users.username, userData.username));
       if (byUsername) existing = byUsername;
     }
 

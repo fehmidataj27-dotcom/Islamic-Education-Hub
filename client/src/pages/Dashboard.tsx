@@ -61,6 +61,7 @@ import patternDark from "@/assets/images/islamic_pattern_dark.png";
 import prayerRug from "@/assets/images/namaz/prayer_rug.png";
 import logoImg from "@/assets/images/wajiha-logo.png";
 import { WisdomManager } from "@/components/WisdomManager";
+import AnnouncementUpload from "@/components/AnnouncementUpload";
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -250,6 +251,7 @@ export default function Dashboard() {
                 <Button variant="outline" className="h-16 px-10 rounded-2xl border-white/20 text-white hover:bg-white/10 backdrop-blur-md font-black text-lg gap-4 transition-all hover:border-amber-400/50">
                   <Activity className="h-6 w-6" />{lang === 'en' ? "Statistics" : "Ø§Ø¹Ø¯Ø§Ø¯ Ùˆ Ø´Ù…Ø§Ø±"}
                 </Button>
+                <AnnouncementUpload />
               </div>
             </div>
 

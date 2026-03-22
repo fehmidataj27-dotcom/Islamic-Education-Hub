@@ -18,6 +18,7 @@ import {
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import AnnouncementUpload from "@/components/AnnouncementUpload";
 
 const GROUP_COLORS = [
     "from-emerald-500 to-teal-600",
@@ -125,6 +126,7 @@ export default function Groups() {
                         </div>
                         {isAdmin && (
                             <div className="flex flex-wrap gap-3">
+                                <AnnouncementUpload />
                                 <Button
                                     className="bg-white text-emerald-800 hover:bg-emerald-50 rounded-xl px-6 font-black shadow-lg transition-all hover:scale-105"
                                     onClick={() => setIsCreateOpen(true)}

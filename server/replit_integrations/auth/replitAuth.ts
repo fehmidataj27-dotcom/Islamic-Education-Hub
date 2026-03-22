@@ -8,6 +8,8 @@ import session from "express-session";
 import type { Express, RequestHandler } from "express";
 import memoize from "memoizee";
 import createMemoryStore from "memorystore";
+import connectPgSimple from "connect-pg-simple";
+import { pool as dbPool } from "../../db";
 import { authStorage } from "./storage";
 
 const getOidcConfig = memoize(
@@ -20,12 +22,23 @@ const getOidcConfig = memoize(
   { maxAge: 3600 * 1000 }
 );
 
-export function getSession() {
+export async function getSession() {
   const sessionTtl = 7 * 24 * 60 * 60 * 1000; // 1 week
-  const MemoryStore = createMemoryStore(session);
-  const sessionStore = new MemoryStore({
-    checkPeriod: 86400000,
-  });
+  let sessionStore;
+
+  if (process.env.DATABASE_URL) {
+    const PostgresqlStore = connectPgSimple(session);
+    sessionStore = new PostgresqlStore({
+      pool: dbPool,
+      tableName: 'session',
+      createTableIfMissing: true,
+    });
+  } else {
+    const MemoryStore = createMemoryStore(session);
+    sessionStore = new MemoryStore({
+      checkPeriod: 86400000,
+    });
+  }
 
   return session({
     secret: process.env.SESSION_SECRET || "default_secret_for_no_db_mode", // Fallback secret
@@ -63,7 +76,7 @@ async function upsertUser(claims: any) {
 export async function setupAuth(app: Express) {
   console.log("[AUTH] Initializing setupAuth...");
   app.set("trust proxy", 1);
-  app.use(getSession());
+  app.use(await getSession());
   app.use(passport.initialize());
   app.use(passport.session());
 
@@ -72,6 +85,7 @@ export async function setupAuth(app: Express) {
   passport.use(
     new LocalStrategy(async (username, password, done) => {
       try {
+        const lowerUsername = username.toLowerCase();
         let user = await authStorage.getUserByUsername(username);
         if (!user) {
           user = await authStorage.getUserByStudentId(username);
@@ -79,7 +93,7 @@ export async function setupAuth(app: Express) {
         if (!user) {
           // Check by email as well
           const allUsers = await authStorage.getUsers();
-          user = allUsers.find(u => u.email === username);
+          user = allUsers.find(u => u.email?.toLowerCase() === lowerUsername);
         }
 
         if (!user) {
