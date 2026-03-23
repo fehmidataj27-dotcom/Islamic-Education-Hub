@@ -31,7 +31,7 @@ export async function getSession() {
     sessionStore = new PostgresqlStore({
       pool: dbPool,
       tableName: 'session',
-      createTableIfMissing: true,
+      createTableIfMissing: false,
     });
   } else {
     const MemoryStore = createMemoryStore(session);

@@ -176,6 +176,34 @@ export async function registerRoutes(httpServer: Server, app: Express): Promise<
     app.post("/api/images/upload", uploadFileHandler);
     app.post("/api/audio/upload", uploadFileHandler);
 
+    // Initial database setup (create session table if missing)
+    app.get("/api/init-db", async (_req, res) => {
+      try {
+        const { pool } = await import("./db");
+        await pool.query(`
+          CREATE TABLE IF NOT EXISTS "session" (
+            "sid" varchar NOT NULL COLLATE "default",
+            "sess" json NOT NULL,
+            "expire" timestamp(6) NOT NULL
+          )
+          WITH (OIDS=FALSE);
+          
+          DO $$ 
+          BEGIN 
+            IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'session_pkey') THEN
+              ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
+            END IF;
+          END $$;
+
+          CREATE INDEX IF NOT EXISTS "IDX_session_expire" ON "session" ("expire");
+        `);
+        res.send("Database initialized: Session table created successfully!");
+      } catch (err: any) {
+        console.error("[INIT-DB] Error:", err.message);
+        res.status(500).send(`Error initializing database: ${err.message}`);
+      }
+    });
+
     // AI Tutor Chat
     app.post("/api/tutor/chat", async (req, res) => {
       const { message } = req.body;
