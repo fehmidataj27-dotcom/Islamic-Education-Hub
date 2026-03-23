@@ -30,8 +30,9 @@ export async function getSession() {
     const PostgresqlStore = connectPgSimple(session);
     sessionStore = new PostgresqlStore({
       pool: dbPool,
+      schemaName: 'public',
       tableName: 'session',
-      createTableIfMissing: false,
+      createTableIfMissing: true,
     });
   } else {
     const MemoryStore = createMemoryStore(session);
