@@ -32,7 +32,7 @@ export async function getSession() {
       pool: dbPool,
       schemaName: 'public',
       tableName: 'session',
-      createTableIfMissing: true,
+      createTableIfMissing: false,
     });
   } else {
     const MemoryStore = createMemoryStore(session);

@@ -1,6 +1,7 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
+import { pool } from "./db";
 import { createServer } from "http";
 import { log } from "./utils";
 const app = express();
@@ -55,6 +56,19 @@ app.use((req, res, next) => {
 
 (async () => {
   try {
+    // Ensure session table exists
+    log("Initializing database...");
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS "session" (
+        "sid" varchar NOT NULL COLLATE "default",
+        "sess" json NOT NULL,
+        "expire" timestamp(6) NOT NULL,
+        CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE
+      ) WITH (OIDS=FALSE);
+      CREATE INDEX IF NOT EXISTS "IDX_session_expire" ON "session" ("expire");
+    `);
+    log("Database initialized: Session table ready!");
+
     await registerRoutes(httpServer, app);
 
     app.use((err: any, _req: Request, res: Response, next: NextFunction) => {
@@ -115,5 +129,6 @@ app.use((req, res, next) => {
     process.exit(1);
   }
 })();
+
 
 
