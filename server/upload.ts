@@ -107,12 +107,61 @@ export const uploadFileHandler = (req: Request, res: Response) => {
         }
 
         // Cloudinary gives a `path` (or `secure_url`) field; local gives `filename`
-        const fileUrl = useCloudinary
+        let fileUrl = useCloudinary
             ? (req.file as any).path   // multer-storage-cloudinary sets file.path = secure_url
             : `/uploads/${req.file.filename}`;
 
+        // FIX FOR EPHEMERAL STORAGE ON RENDER:
+        // Try uploading directly to Supabase Storage first if keys are configured!
+        let uploadedToSupabase = false;
+        if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY && !useCloudinary) {
+            try {
+                const bucketName = "bucket";
+                const fileName = `uploads/${Date.now()}_${req.file.originalname.replace(/[^a-zA-Z0-9.\-_]/g, '')}`;
+                const uploadUrl = `${process.env.SUPABASE_URL}/storage/v1/object/${bucketName}/${fileName}`;
+                
+                const fileBuffer = fs.readFileSync(req.file.path);
+
+                const response = await fetch(uploadUrl, {
+                    method: "POST",
+                    headers: {
+                        "apikey": process.env.SUPABASE_SERVICE_ROLE_KEY,
+                        "Authorization": `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`,
+                        "Content-Type": req.file.mimetype,
+                        "x-upsert": "true"
+                    },
+                    body: fileBuffer
+                });
+
+                if (response.ok) {
+                    fileUrl = `${process.env.SUPABASE_URL}/storage/v1/object/public/${bucketName}/${fileName}`;
+                    uploadedToSupabase = true;
+                    // Clean up local temp file instantly
+                    fs.unlinkSync(req.file.path);
+                    console.log(`[Upload-Handler] Successfully pushed file directly to permanent Supabase Storage: ${fileUrl}`);
+                } else {
+                    console.error("[Upload-Handler] Supabase Storage push failed:", await response.text());
+                }
+            } catch (supaErr) {
+                console.error("[Upload-Handler] Failed uploading file to Supabase directly:", supaErr);
+            }
+        }
+
+        // If Cloudinary and Supabase both failed or are unset, fallback to Base64 conversions for small files (< 15MB)
+        if (!useCloudinary && !uploadedToSupabase && req.file && req.file.size < 15 * 1024 * 1024 && fs.existsSync(req.file.path)) {
+            try {
+                const base64Data = fs.readFileSync(req.file.path, { encoding: "base64" });
+                fileUrl = `data:${req.file.mimetype};base64,${base64Data}`;
+                // Clean up the ephemeral file to save disk space
+                fs.unlinkSync(req.file.path);
+                console.log(`[Upload-Handler] Converted file to Base64 for permanent DB storage (~${Math.round(base64Data.length / 1024)} KB)`);
+            } catch (convertErr) {
+                console.error("[Upload-Handler] Failed to convert file to base64, leaving on disk:", convertErr);
+            }
+        }
+
         console.log(
-            `[Upload-Handler] Success: ${fileUrl} (Size: ${req.file.size} bytes)`
+            `[Upload-Handler] Success: ${uploadedToSupabase ? 'Supabase URL' : (!useCloudinary && fileUrl.startsWith('data:') ? 'Base64 Data URI encoded' : fileUrl)} (Size: ${req.file.size} bytes)`
         );
         res.json({ url: fileUrl });
     });
