@@ -3,6 +3,7 @@ import { chatStorage } from "./storage";
 import { openai, speechToText, ensureCompatibleFormat } from "../audio/client";
 import { getLocalIslamicAnswer, getRandomIslamicQuote } from "./knowledge";
 import { isAuthenticated } from "../auth";
+import { pool } from "../../db";
 
 const audioBodyParser = express.json({ limit: "50mb" });
 
@@ -80,17 +81,15 @@ export function registerChatRoutes(app: Express): void {
   app.post("/api/conversations/:id/messages", isAuthenticated, audioBodyParser, async (req: Request, res: Response) => {
     console.log(`[ChatRoutes] POST /api/conversations/${req.params.id}/messages - Unified Handler Ready`);
     try {
-      const conversationId = parseInt(req.params.id as string);
       const { content, audio, fileType, fileUrl, voice = "alloy", replyToId, replyToContent, replyToAuthor } = req.body;
+      const user = (req as any).user;
+      const userRole = user?.claims?.first_name || user?.firstName || "user";
 
-      const user = (req as any).user; // Access authenticated user
-      const userRole = user?.claims?.first_name || user?.firstName || "user"; // Determine user role for message
-
-      let userText = content;
+      let userText = content || "";
 
       // Handle Voice Input (Directly from audio field)
       if (audio) {
-        console.log("[ChatRoutes] Processing audio input...");
+        console.log("[ChatRoutes] Processing audio input for transcription...");
         try {
           const rawBuffer = Buffer.from(audio, "base64");
           const { buffer: audioBuffer, format: inputFormat } = await ensureCompatibleFormat(rawBuffer);
@@ -98,8 +97,7 @@ export function registerChatRoutes(app: Express): void {
           console.log(`[ChatRoutes] Transcribed: "${userText.substring(0, 30)}..."`);
         } catch (sttError) {
           console.error("[ChatRoutes] Speech-to-Text failed:", (sttError as Error).message);
-          // If we fail to transcribe (like missing API key), still let the message through
-          userText = content || "Voice Message (Transcription Unavailable - Please check OpenAI API Key)";
+          userText = content || "Voice Message (Transcription Unavailable)";
         }
       }
 
@@ -107,20 +105,26 @@ export function registerChatRoutes(app: Express): void {
         return res.status(400).json({ error: "Message content, audio, or fileUrl is required" });
       }
 
-      const userId = user?.id || user?.sub;
+      const conversationId = parseInt(req.params.id as string);
+      if (isNaN(conversationId)) {
+        return res.status(400).json({ error: "Invalid conversation ID" });
+      }
 
-      // Save user message with their name as the role and the userId as senderId
+      const userId = String(user?.id || user?.sub || "");
+      if (!userId) {
+        return res.status(401).json({ error: "User ID not found" });
+      }
+
+      // Save user message
       console.log(`[ChatRoutes] Creating message for user ${userId} in conv ${conversationId}`);
       await chatStorage.createMessage(conversationId, userRole, userText, userId, fileType, fileUrl, replyToId, replyToContent, replyToAuthor);
 
-      // Get conversation history filtered for the current user
       const messages = await chatStorage.getMessagesByConversation(conversationId, userId);
       const chatMessages = messages.map((m) => ({
-        role: m.role as "user" | "assistant",
-        content: m.content,
+        role: (m.role.toLowerCase() === "assistant" ? "assistant" : "user") as "assistant" | "user",
+        content: m.content || "",
       }));
 
-      // Check if client expects SSE
       const isStreaming = req.headers["accept"] === "text/event-stream";
       let fullResponse = "";
 
@@ -128,15 +132,15 @@ export function registerChatRoutes(app: Express): void {
         res.setHeader("Content-Type", "text/event-stream");
         res.setHeader("Cache-Control", "no-cache");
         res.setHeader("Connection", "keep-alive");
-
-        if (audio) {
-          // Send user transcript back to UI if we processed audio
-          res.write(`data: ${JSON.stringify({ type: "user_transcript", data: userText })}\n\n`);
-        }
       }
 
       const conversation = await chatStorage.getConversation(conversationId);
-      const isAIEnabled = conversation?.title?.toLowerCase().includes("ai assistant") || conversationId === 1;
+      const conversationTitle = (conversation?.title || "").toLowerCase();
+      const isAIEnabled =
+        conversationTitle.includes("ai assistant") ||
+        conversationTitle.includes("ai tutor") ||
+        conversationTitle.includes("islamic ai") ||
+        conversationId === 1;
 
       if (isAIEnabled) {
         try {
@@ -205,13 +209,30 @@ export function registerChatRoutes(app: Express): void {
         const allMessages = await chatStorage.getMessagesByConversation(conversationId, userId);
         res.json({ ...conversation, messages: allMessages, content: fullResponse });
       }
-    } catch (error) {
-      console.error("[ChatRoutes] CRITICAL Error:", error);
+    } catch (error: any) {
+      console.error("[ChatRoutes] CRITICAL Error processing message:", error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      const errorStack = error instanceof Error ? error.stack : "";
+
+      // Log to remote DB for debugging Render
+      try {
+        await pool.query(
+          "INSERT INTO server_errors (message, stack, conversation_id, user_id) VALUES ($1, $2, $3, $4)",
+          [errorMessage, errorStack, req.params.id ? parseInt(req.params.id as string) : null, (req as any).user?.id || null]
+        );
+      } catch (dbLogErr) {
+        console.error("[ChatRoutes] Failed to log error to DB:", dbLogErr);
+      }
+      
       if (res.headersSent) {
-        res.write(`data: ${JSON.stringify({ error: "Failed to process message", type: "error" })}\n\n`);
+        res.write(`data: ${JSON.stringify({ error: errorMessage, type: "error" })}\n\n`);
         res.end();
       } else {
-        res.status(500).json({ error: "Failed to process message" });
+        // ALWAYS returning details temporarily to debug Render issue
+        res.status(500).json({ 
+          error: "Failed to process message", 
+          details: errorMessage 
+        });
       }
     }
   });
@@ -220,10 +241,11 @@ export function registerChatRoutes(app: Express): void {
     try {
       const messageId = parseInt(req.params.messageId);
       const user = (req as any).user;
-      const conversationId = parseInt(typeof req.query.conversationId === 'string' ? req.query.conversationId : '');
+      const conversationIdQuery = req.query.conversationId;
+      const conversationId = parseInt(Array.isArray(conversationIdQuery) ? String(conversationIdQuery[0]) : String(conversationIdQuery || ''));
       if (isNaN(conversationId)) return res.status(400).json({ error: "conversationId is required" });
 
-      const userId = (user?.id || user?.sub || user?.claims?.sub) as string;
+      const userId = String(user?.id || user?.sub || user?.claims?.sub || "");
       const userRoleFull = ((user?.role || user?.claims?.role || "student") as string).toLowerCase();
 
       const messages = await chatStorage.getMessagesByConversation(conversationId);
@@ -252,7 +274,7 @@ export function registerChatRoutes(app: Express): void {
     try {
       const messageId = parseInt(req.params.messageId);
       const user = (req as any).user;
-      const userId = (user?.id || user?.sub || user?.claims?.sub) as string;
+      const userId = String(user?.id || user?.sub || user?.claims?.sub || "");
 
       if (!userId) return res.status(401).json({ error: "User ID not found" });
 

@@ -160,10 +160,10 @@ class DatabaseChatStorage implements IChatStorage {
     );
 
     if (userId) {
-      // Check if userId is NOT in the deletedForUsers jsonb array
+      // Safely check if userId is in the deletedForUsers array, handling NULL with COALESCE
       conditions = and(
         conditions,
-        not(sql`${messages.deletedForUsers} @> jsonb_build_array(${userId})`)
+        not(sql`COALESCE(${messages.deletedForUsers}, '[]'::jsonb) @> jsonb_build_array(${userId})`)
       );
     }
 
