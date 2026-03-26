@@ -163,7 +163,7 @@ class DatabaseChatStorage implements IChatStorage {
       // Safely check if userId is in the deletedForUsers array, handling NULL with COALESCE
       conditions = and(
         conditions,
-        not(sql`COALESCE(${messages.deletedForUsers}, '[]'::jsonb) @> jsonb_build_array(${userId})`)
+        not(sql`COALESCE(${messages.deletedForUsers}, '[]'::jsonb) @> jsonb_build_array(${userId}::text)`)
       );
     }
 
@@ -200,7 +200,7 @@ class DatabaseChatStorage implements IChatStorage {
     // Using sql append to handle jsonb array push
     await db.update(messages)
       .set({
-        deletedForUsers: sql`COALESCE(deleted_for_users, '[]'::jsonb) || jsonb_build_array(${userId})`
+        deletedForUsers: sql`COALESCE(deleted_for_users, '[]'::jsonb) || jsonb_build_array(${userId}::text)`
       })
       .where(eq(messages.id, messageId));
   }
